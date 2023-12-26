@@ -1,7 +1,7 @@
 ﻿using QuickService.Abstract.Interfaces;
 
 using QuickService.ViewModels.Factory;
-using QuickService.ViewModels.Window;
+using QuickService.ViewModels;
 
 namespace QuickService.App;
 

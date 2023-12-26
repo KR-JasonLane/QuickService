@@ -1,10 +1,10 @@
 ﻿using QuickService.Abstract.Interfaces;
 
-namespace QuickService.ViewModels.Window;
+namespace QuickService.ViewModels;
 
-public class MainWindowViewModel : IViewModel
+public partial class MainViewModel : ObservableRecipient, IViewModel
 {
-	public MainWindowViewModel()
+	public MainViewModel()
 	{
 		////////////////////////////////////////
 		// 뷰모델 기본 속성

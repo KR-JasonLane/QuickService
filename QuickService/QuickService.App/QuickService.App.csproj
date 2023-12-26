@@ -6,11 +6,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\QuickService.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\TItle\QuickService.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\QuickService.Abstract\QuickService.Abstract.csproj" />
     <ProjectReference Include="..\QuickService.ViewModels\QuickService.ViewModels.csproj" />
+    <ProjectReference Include="..\QuickService.Views\QuickService.Views.csproj" />
   </ItemGroup>
 
 </Project>

@@ -15,6 +15,16 @@
 
     <Grid>
 
+        <ContentControl>
+
+            <ContentControl.Content>
+
+                <Binding Path="ShellContent"/>
+
+            </ContentControl.Content>
+
+        </ContentControl>
+
     </Grid>
     
 </Window>

@@ -1,5 +1,5 @@
 ﻿using QuickService.Abstract.Interfaces;
-using QuickService.ViewModels.Window;
+using QuickService.ViewModels;
 
 namespace QuickService.ViewModels.Factory;
 
@@ -122,7 +122,9 @@ public sealed class ViewModelFactory
 
 	#region Dependency
 
-	public IViewModel GetMainWindowViewModel() => GetViewModel<MainWindowViewModel>();
+	public IViewModel GetMainWindowViewModel() => GetViewModel<MainWindowViewModel>(nameof(MainViewModel)[..^9]);
+
+	public IViewModel GetMainViewModel() => GetViewModel<MainViewModel>();
 
 	#endregion
 
