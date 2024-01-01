@@ -1,5 +1,4 @@
 ﻿using QuickService.Abstract.Interfaces;
-using QuickService.ViewModels;
 
 namespace QuickService.ViewModels.Factory;
 
@@ -124,7 +123,13 @@ public sealed class ViewModelFactory
 
 	public IViewModel GetMainWindowViewModel() => GetViewModel<MainWindowViewModel>(nameof(MainViewModel)[..^9]);
 
-	public IViewModel GetMainViewModel() => GetViewModel<MainViewModel>();
+	public IViewModel GetMainViewModel() => GetViewModel<MainViewModel>(nameof(TitleViewModel)[..^9],
+																		nameof(InteractionViewModel)[..^9],
+																		nameof(SelectedFileViewModel)[..^9]);
+
+	public IViewModel GetTitleViewModel() => GetViewModel<TitleViewModel>();
+	public IViewModel GetInteractionViewModel() => GetViewModel<InteractionViewModel>();
+	public IViewModel GetSelectedFileViewModel() => GetViewModel<SelectedFileViewModel>();
 
 	#endregion
 

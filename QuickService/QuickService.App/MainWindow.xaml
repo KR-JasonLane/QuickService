@@ -15,15 +15,7 @@
 
     <Grid>
 
-        <ContentControl>
-
-            <ContentControl.Content>
-
-                <Binding Path="ShellContent"/>
-
-            </ContentControl.Content>
-
-        </ContentControl>
+        <ContentControl Content="{Binding ShellContent}"/>
 
     </Grid>
     

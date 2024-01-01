@@ -9,13 +9,21 @@
     
     <Grid>
 
-        <Grid.RowDefinitions>            
+        <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-            
+
+        <ContentControl Grid.Row="0"
+                        Content="{Binding TitleContent}"/>
+
+        <ContentControl Grid.Row="1"
+                        Content="{Binding InteractionContent}"/>
+
+        <ContentControl Grid.Row="2"
+                        Content="{Binding SelectedFileContent}"/>
+
     </Grid>
     
 </UserControl>

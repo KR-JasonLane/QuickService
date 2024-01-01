@@ -10,5 +10,17 @@
     <DataTemplate DataType="{x:Type vm:MainViewModel}">
         <v:MainView />
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:TitleViewModel}">
+        <v:TitleView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:InteractionViewModel}">
+        <v:InteractionView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:SelectedFileViewModel}">
+        <v:SelectedFileView/>
+    </DataTemplate>
     
 </ResourceDictionary>
