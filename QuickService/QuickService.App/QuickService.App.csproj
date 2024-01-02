@@ -10,13 +10,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\TItle\QuickServiceLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Resources\TItle\QuickService.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\QuickService.Abstract\QuickService.Abstract.csproj" />
+    <ProjectReference Include="..\QuickService.Common\QuickService.Common.csproj" />
     <ProjectReference Include="..\QuickService.ViewModels\QuickService.ViewModels.csproj" />
     <ProjectReference Include="..\QuickService.Views\QuickService.Views.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\TItle\QuickServiceLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

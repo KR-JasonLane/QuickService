@@ -13,5 +13,9 @@
     <None Remove="Windows\**" />
     <Page Remove="Windows\**" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\QuickService.Common\QuickService.Common.csproj" />
+  </ItemGroup>
 
 </Project>
