@@ -8,4 +8,10 @@
     <SolidColorBrush x:Key="BackgroundBrushMid" Color="#00a15c"/>
     <SolidColorBrush x:Key="BackgroundBrushDark" Color="#007131"/>
 
+    <!--                                        -->
+    <!--               Background               -->
+    <!--                                        -->
+
+    <SolidColorBrush x:Key="ForegroundPackIcon" Color="WhiteSmoke"/>
+
 </ResourceDictionary>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -12,6 +12,10 @@
     <EmbeddedResource Remove="Windows\**" />
     <None Remove="Windows\**" />
     <Page Remove="Windows\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
   </ItemGroup>
 	
   <ItemGroup>

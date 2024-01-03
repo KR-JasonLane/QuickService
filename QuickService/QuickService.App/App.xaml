@@ -10,6 +10,9 @@
                 <!--ViewModel과 View를 맵핑시켜 Content에 등록 된 ViewModel에 대한 View를 호출-->
                 <ResourceDictionary Source="/QuickService.App;component/MVVM/Mappings.xaml"/>
 
+                <!--Material Design 라이브러리 리소스 등록-->
+                <ResourceDictionary Source="/QuickService.Views;component/MaterialDesign/MaterialDesignResources.xaml"/>
+
                 <!--컬러가 정의되어있는 리소스 사전을 등록-->
                 <ResourceDictionary Source="/QuickService.Common;component/Colors/ColorDictionary.xaml"/>
 

@@ -36,5 +36,11 @@ public partial class TitleViewModel : ObservableRecipient, IViewModel
 
     #region Methods
 
-    #endregion
+    /// <summary>
+    /// 종료버튼 클릭 커맨드
+    /// </summary>
+    [RelayCommand]
+    private void ClickCloseButton() => Process.GetCurrentProcess().Kill();
+
+	#endregion
 }
