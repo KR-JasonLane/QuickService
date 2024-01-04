@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickService.Abstract", "Qu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickService.Views", "QuickService.Views\QuickService.Views.csproj", "{518F0F63-94B3-43C6-ACA3-E4BBB57014E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickService.Common", "QuickService.Common\QuickService.Common.csproj", "{3D3F51B9-27B8-4B2E-A9E7-AAF33CBF74DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickService.Common", "QuickService.Common\QuickService.Common.csproj", "{3D3F51B9-27B8-4B2E-A9E7-AAF33CBF74DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickService.Domain", "QuickService.Domain\QuickService.Domain.csproj", "{B76FEF06-560A-4612-B88D-8333C5C748ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{3D3F51B9-27B8-4B2E-A9E7-AAF33CBF74DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D3F51B9-27B8-4B2E-A9E7-AAF33CBF74DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D3F51B9-27B8-4B2E-A9E7-AAF33CBF74DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B76FEF06-560A-4612-B88D-8333C5C748ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B76FEF06-560A-4612-B88D-8333C5C748ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B76FEF06-560A-4612-B88D-8333C5C748ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B76FEF06-560A-4612-B88D-8333C5C748ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

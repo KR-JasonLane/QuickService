@@ -4,34 +4,16 @@ namespace QuickService.ViewModels;
 
 public partial class MainViewModel : ObservableRecipient, IViewModel
 {
-	public MainViewModel(IViewModel titleViewModel, 
-						 IViewModel interactionViewModel, 
-						 IViewModel selectedFileViewModel)
+	public MainViewModel()
 	{
-		////////////////////////////////////////
-		// 뷰모델 기본 속성
-		////////////////////////////////////////
-		{
-
-		}
-
-
 		////////////////////////////////////////
 		// 바인딩 속성
 		////////////////////////////////////////
 		{
-
+			TitleContent		= Ioc.Default.GetService<TitleViewModel>		()!;
+			InteractionContent	= Ioc.Default.GetService<InteractionViewModel>	()!;
+			SelectedFileContent = Ioc.Default.GetService<SelectedFileViewModel>	()!;
 		}
-
-
-        ////////////////////////////////////////
-        // 뷰모델 의존성
-        ////////////////////////////////////////
-        {
-			TitleContent		= titleViewModel;
-			InteractionContent	= interactionViewModel;
-			SelectedFileContent = selectedFileViewModel;
-        }
 	}
 
 	#region Properties

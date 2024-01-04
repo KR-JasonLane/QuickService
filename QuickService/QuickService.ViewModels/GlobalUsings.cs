@@ -1,7 +1,5 @@
 ﻿global using CommunityToolkit.Mvvm.Input;
 global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.DependencyInjection;
 
-global using Microsoft.Extensions.DependencyInjection;
-
-global using System.Reflection;
 global using System.Diagnostics;
