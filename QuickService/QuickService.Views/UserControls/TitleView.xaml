@@ -4,12 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:bhv="clr-namespace:QuickService.Domain.Behaviors;assembly=QuickService.Domain"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:QuickService.Views"
              Background="{StaticResource BackgroundBrushMid}"
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="400">
-    
+
     <Grid>
+
+        <i:Interaction.Behaviors>
+
+            <bhv:TitleLeftButtonDownDehavior/>
+
+        </i:Interaction.Behaviors>
+
+        <!--마우스 인터랙션용-->
+        <Rectangle Fill="Transparent"/>
 
         <Image Source="/QuickService.App;component/Resources/Title/QuickServiceLogo.png"
                Margin="5"
@@ -44,7 +55,7 @@
             </Button>
 
         </StackPanel>
-
+                
     </Grid>
     
 </UserControl>

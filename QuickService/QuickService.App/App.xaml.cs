@@ -12,13 +12,7 @@ public partial class App : Application
 {
 	public App()
 	{
-		////////////////////////////////////////
-		// Dependency
-		////////////////////////////////////////
-		{
-			var services = ConfigureServices();
-			Ioc.Default.ConfigureServices(services);
-		}
+		IocBuilder.Build();
 	}
 
 	#region Methods
@@ -39,23 +33,6 @@ public partial class App : Application
 
 			window.ShowDialog();
 		}
-	}
-
-	/// <summary>
-	/// Ioc컨테이너 생성
-	/// </summary>
-	/// <returns> IServiceProvider 객체 </returns>
-	private IServiceProvider ConfigureServices()
-	{
-		var services = new ServiceCollection();
-
-		services.AddTransient<ShellWindowViewModel>();
-		services.AddTransient<MainViewModel>();
-		services.AddTransient<TitleViewModel>();
-		services.AddTransient<InteractionViewModel>();
-		services.AddTransient<SelectedFileViewModel>();
-
-		return services.BuildServiceProvider();
 	}
 
 	#endregion
