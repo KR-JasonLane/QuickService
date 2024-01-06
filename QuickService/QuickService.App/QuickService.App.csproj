@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\TItle\QuickService.ico</ApplicationIcon>
+    <UseWindowsForms>False</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>

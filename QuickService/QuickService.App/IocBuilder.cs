@@ -1,4 +1,5 @@
-﻿using QuickService.ViewModels;
+﻿using QuickService.Domain.Services;
+using QuickService.ViewModels;
 
 namespace QuickService.App;
 
@@ -24,6 +25,15 @@ public static class IocBuilder
 		var services = new ServiceCollection();
 
 		////////////////////////////////////////
+		// Services
+		////////////////////////////////////////
+		{
+			services.AddSingleton<IHideMainWindowService,	HideMainWindowService	>();
+			services.AddSingleton<ITrayIconService		,	TrayIconService			>();
+		}
+
+
+		////////////////////////////////////////
 		// Shell Window
 		////////////////////////////////////////
 		{
@@ -35,10 +45,10 @@ public static class IocBuilder
 		// Shell Contents
 		////////////////////////////////////////
 		{
-			services.AddTransient<MainViewModel>();
-			services.AddTransient<TitleViewModel>();
-			services.AddTransient<InteractionViewModel>();
-			services.AddTransient<SelectedFileViewModel>();
+			services.AddTransient<MainViewModel			>();
+			services.AddTransient<TitleViewModel		>();
+			services.AddTransient<InteractionViewModel	>();
+			services.AddTransient<SelectedFileViewModel	>();
 		}
 
 		return services.BuildServiceProvider();

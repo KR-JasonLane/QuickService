@@ -30,8 +30,21 @@
                     HorizontalAlignment="Right"
                     Margin="5">
 
+
             <Button Width="30" Height="30"
                     Margin="5"
+                    Style="{StaticResource MaterialDesignIconButton}" Cursor="Hand">
+
+                <md:PackIcon Kind="CogOutline"
+                             VerticalAlignment="Center"  
+                             HorizontalAlignment="Center"
+                             Foreground="{StaticResource ForegroundPackIcon}"/>
+
+            </Button>
+
+            <Button Width="30" Height="30"
+                    Margin="5"
+                    Command="{Binding HideWindowAndVisibleTrayIconCommand}"
                     Style="{StaticResource MaterialDesignIconButton}">
                 
                 <md:PackIcon Kind="HideOutline"
@@ -44,7 +57,7 @@
 
             <Button Width="30" Height="30"
                     Margin="5"
-                    Command="{Binding ClickCloseButtonCommand}"
+                    Command="{Binding KillProcessCommand}"
                     Style="{StaticResource MaterialDesignIconButton}">
 
                 <md:PackIcon Kind="Close"

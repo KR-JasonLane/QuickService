@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuickService.Abstract\QuickService.Abstract.csproj" />
+    <ProjectReference Include="..\QuickService.Domain\QuickService.Domain.csproj" />
   </ItemGroup>
 
 </Project>
