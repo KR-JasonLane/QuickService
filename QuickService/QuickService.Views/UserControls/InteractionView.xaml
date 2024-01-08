@@ -3,13 +3,223 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:QuickService.Views"
-             Background="{StaticResource BackgroundBrushMid}"
              mc:Ignorable="d" 
+             Background="{StaticResource BackgroundBrushMid}"
+             FontFamily="Roboto"
              d:DesignHeight="100" d:DesignWidth="500">
     
-    <Grid>
+    <Grid Cursor="">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Left App-->
+        <StackPanel Grid.Column="0" 
+                    VerticalAlignment="Center">
             
+            <Button Width="70" Height="70" 
+                    Style="{StaticResource MaterialDesignFlatAccentButton}" 
+                    Cursor="Hand" 
+                    Command="{Binding MemorizedQuickServiceApplicationCommand}"
+                    CommandParameter="{Binding ElementName=LeftApplicationButtonText, Path=Text, UpdateSourceTrigger=PropertyChanged}">
+
+                <md:PackIcon Width="45" Height="45"
+                             HorizontalAlignment="Center" 
+                             Foreground="{StaticResource ForegroundMid}"
+                             Kind="CircleSlice2">
+
+                    <md:PackIcon.RenderTransform>
+                        <RotateTransform Angle="225"/>
+                    </md:PackIcon.RenderTransform>
+
+                    <md:PackIcon.RenderTransformOrigin>
+                        <Point X="0.5" Y="0.5"/>
+                    </md:PackIcon.RenderTransformOrigin>
+
+                </md:PackIcon>
+            </Button>
+
+            <TextBlock x:Name="LeftApplicationButtonText"
+                       Text="LEFT" 
+                       TextAlignment="Center" 
+                       FontWeight="Bold" 
+                       Foreground="{StaticResource ForegroundMid}"/>
+
+        </StackPanel>
+
+        <!--Top App-->
+        <StackPanel Grid.Column="1" 
+                    VerticalAlignment="Center">
+
+            <Button Width="70" Height="70" 
+                    Style="{StaticResource MaterialDesignFlatAccentButton}" 
+                    Cursor="Hand" 
+                    Command="{Binding MemorizedQuickServiceApplicationCommand}" 
+                    CommandParameter="{Binding ElementName=TopApplicationButtonText, Path=Text, UpdateSourceTrigger=PropertyChanged}">
+
+                <md:PackIcon Width="45" Height="45"
+                             HorizontalAlignment="Center" 
+                             Foreground="{StaticResource ForegroundMid}"
+                             Kind="CircleSlice2">
+
+                    <md:PackIcon.RenderTransform>
+                        <RotateTransform Angle="315"/>
+                    </md:PackIcon.RenderTransform>
+
+                    <md:PackIcon.RenderTransformOrigin>
+                        <Point X="0.5" Y="0.5"/>
+                    </md:PackIcon.RenderTransformOrigin>
+
+                </md:PackIcon>
+            </Button>
+
+            <TextBlock x:Name="TopApplicationButtonText"
+                       Text="TOP" 
+                       TextAlignment="Center" 
+                       FontWeight="Bold" 
+                       Foreground="{StaticResource ForegroundMid}"/>
+
+        </StackPanel>
+
+        <!--Right App-->
+        <StackPanel Grid.Column="2" 
+                    VerticalAlignment="Center">
+
+            <Button Width="70" Height="70" 
+                    Style="{StaticResource MaterialDesignFlatAccentButton}" 
+                    Cursor="Hand" 
+                    Command="{Binding MemorizedQuickServiceApplicationCommand}" 
+                    CommandParameter="{Binding ElementName=RightApplicationButtonText, Path=Text, UpdateSourceTrigger=PropertyChanged}">
+
+                <md:PackIcon Width="45" Height="45"
+                             HorizontalAlignment="Center" 
+                             Foreground="{StaticResource ForegroundMid}"
+                             Kind="CircleSlice2">
+
+                    <md:PackIcon.RenderTransform>
+                        <RotateTransform Angle="45"/>
+                    </md:PackIcon.RenderTransform>
+
+                    <md:PackIcon.RenderTransformOrigin>
+                        <Point X="0.5" Y="0.5"/>
+                    </md:PackIcon.RenderTransformOrigin>
+
+                </md:PackIcon>
+            </Button>
+
+            <TextBlock x:Name="RightApplicationButtonText"
+                       Text="RIGHT" 
+                       TextAlignment="Center" 
+                       FontWeight="Bold" 
+                       Foreground="{StaticResource ForegroundMid}"/>
+            
+        </StackPanel>
+
+        <!--Bottom App-->
+        <StackPanel Grid.Column="3" 
+                    VerticalAlignment="Center">
+
+            <Button Width="70" Height="70" 
+                    Style="{StaticResource MaterialDesignFlatAccentButton}" 
+                    Cursor="Hand" 
+                    Command="{Binding MemorizedQuickServiceApplicationCommand}" 
+                    CommandParameter="{Binding ElementName=BottomApplicationButtonText, Path=Text, UpdateSourceTrigger=PropertyChanged}">
+
+                <md:PackIcon Width="45" Height="45"
+                             HorizontalAlignment="Center" 
+                             Foreground="{StaticResource ForegroundMid}"
+                             Kind="CircleSlice2">
+
+                    <md:PackIcon.RenderTransform>
+                        <RotateTransform Angle="135"/>
+                    </md:PackIcon.RenderTransform>
+
+                    <md:PackIcon.RenderTransformOrigin>
+                        <Point X="0.5" Y="0.5"/>
+                    </md:PackIcon.RenderTransformOrigin>
+
+                </md:PackIcon>
+                
+            </Button>
+
+            <TextBlock x:Name="BottomApplicationButtonText"
+                       Text="BOTTOM" 
+                       TextAlignment="Center" 
+                       FontWeight="Bold"
+                       Foreground="{StaticResource ForegroundMid}"/>
+
+        </StackPanel>
+
+        <!--Contact-->
+        <StackPanel Grid.Column="4" VerticalAlignment="Center">
+
+            <!--Github-->
+            <Button HorizontalAlignment="Left" 
+                    Style="{StaticResource MaterialDesignFlatButton}" 
+                    Foreground="{StaticResource ForegroundMid}"
+                    Command="{Binding OpenWebSiteLinkCommand}" 
+                    CommandParameter="https://github.com/KR-JasonLane">
+                
+                <StackPanel Orientation="Horizontal">
+                    
+                    <md:PackIcon Kind="Github" />
+                    
+                    <TextBlock Margin="8,0,0,0" 
+                               VerticalAlignment="Center" 
+                               Text="Git" />
+                    
+                </StackPanel>
+                
+            </Button>
+
+            <!--Blog-->
+            <Button HorizontalAlignment="Center" 
+                    Style="{StaticResource MaterialDesignFlatButton}" 
+                    Foreground="{StaticResource ForegroundMid}"
+                    Command="{Binding OpenWebSiteLinkCommand}" 
+                    CommandParameter="https://lee-coder.tistory.com">
+                
+                <StackPanel Orientation="Horizontal">
+                    
+                    <md:PackIcon Kind="Web" />
+                    
+                    <TextBlock Margin="3,0,0,0" 
+                               VerticalAlignment="Center" 
+                               Text="Blog" />
+                    
+                </StackPanel>
+                
+            </Button>
+
+            <!--Mail-->
+            <Button HorizontalAlignment="Center" 
+                    Style="{StaticResource MaterialDesignFlatButton}" 
+                    Foreground="{StaticResource ForegroundMid}"
+                    Command="{Binding OpenWebSiteLinkCommand}" 
+                    CommandParameter="mailto://malbox0609@gmail.com">
+                
+                <StackPanel Orientation="Horizontal" Cursor="">
+                    
+                    <md:PackIcon Kind="GMail" />
+                    
+                    <TextBlock Margin="3,0,0,0" 
+                               VerticalAlignment="Center" 
+                               Text="Mail" />
+                    
+                </StackPanel>
+                
+            </Button>
+
+        </StackPanel>
+
+
     </Grid>
     
 </UserControl>

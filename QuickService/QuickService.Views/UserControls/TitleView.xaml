@@ -33,12 +33,13 @@
 
             <Button Width="30" Height="30"
                     Margin="5"
-                    Style="{StaticResource MaterialDesignIconButton}" Cursor="Hand">
+                    Style="{StaticResource MaterialDesignIconButton}" 
+                    Cursor="Hand">
 
                 <md:PackIcon Kind="CogOutline"
                              VerticalAlignment="Center"  
                              HorizontalAlignment="Center"
-                             Foreground="{StaticResource ForegroundPackIcon}"/>
+                             Foreground="{StaticResource WindowButtonForeground}"/>
 
             </Button>
 
@@ -50,7 +51,7 @@
                 <md:PackIcon Kind="HideOutline"
                              VerticalAlignment="Center"  
                              HorizontalAlignment="Center"
-                             Foreground="{StaticResource ForegroundPackIcon}"/>
+                             Foreground="{StaticResource WindowButtonForeground}"/>
                 
             </Button>
 
@@ -63,12 +64,12 @@
                 <md:PackIcon Kind="Close"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Center"
-                             Foreground="{StaticResource ForegroundPackIcon}"/>
+                             Foreground="{StaticResource WindowButtonForeground}"/>
 
             </Button>
 
         </StackPanel>
-                
+
     </Grid>
     
 </UserControl>

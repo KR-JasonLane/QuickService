@@ -5,13 +5,14 @@
     <!--               Background               -->
     <!--                                        -->
     
-    <SolidColorBrush x:Key="BackgroundBrushMid" Color="#00a15c"/>
-    <SolidColorBrush x:Key="BackgroundBrushDark" Color="#007131"/>
+    <SolidColorBrush x:Key="BackgroundBrushMid"     Color="#00a15c"/>
+    <SolidColorBrush x:Key="BackgroundBrushDark"    Color="#007131"/>
 
     <!--                                        -->
-    <!--               Background               -->
+    <!--               Foreground               -->
     <!--                                        -->
 
-    <SolidColorBrush x:Key="ForegroundPackIcon" Color="WhiteSmoke"/>
+    <SolidColorBrush x:Key="WindowButtonForeground" Color="WhiteSmoke"/>
+    <SolidColorBrush x:Key="ForegroundMid"          Color="#003e23"/>
 
 </ResourceDictionary>
