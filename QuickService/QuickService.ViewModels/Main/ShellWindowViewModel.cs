@@ -22,9 +22,13 @@ public partial class ShellWindowViewModel : ObservableRecipient, IViewModel
 	[ObservableProperty]
 	public IViewModel? _shellContent;
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Commands
 
-	#endregion
+    #endregion
+
+    #region Methods
+
+    #endregion
 }

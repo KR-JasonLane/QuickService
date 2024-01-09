@@ -36,9 +36,13 @@ public partial class MainViewModel : ObservableRecipient, IViewModel
 	[ObservableProperty]
 	private IViewModel _selectedFileContent;
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Commands
 
-	#endregion
+    #endregion
+
+    #region Methods
+
+    #endregion
 }

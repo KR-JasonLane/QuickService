@@ -13,6 +13,10 @@ public partial class SelectedFileViewModel : ObservableRecipient, IViewModel
 
     #endregion
 
+    #region Commands
+
+    #endregion
+
     #region Methods
 
     #endregion

@@ -30,6 +30,7 @@ public static class IocBuilder
 		{
 			services.AddSingleton<IHideMainWindowService,	HideMainWindowService	>();
 			services.AddSingleton<ITrayIconService		,	TrayIconService			>();
+			services.AddSingleton<IUserSelectPathService,	UserSelectPathService	>();
 		}
 
 

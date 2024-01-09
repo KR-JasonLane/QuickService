@@ -27,7 +27,7 @@
             <Button Width="70" Height="70" 
                     Style="{StaticResource MaterialDesignFlatAccentButton}" 
                     Cursor="Hand" 
-                    Command="{Binding MemorizedQuickServiceApplicationCommand}"
+                    Command="{Binding RegistrationQuickServiceApplicationCommand}"
                     CommandParameter="{Binding ElementName=LeftApplicationButtonText, Path=Text, UpdateSourceTrigger=PropertyChanged}">
 
                 <md:PackIcon Width="45" Height="45"
@@ -61,7 +61,7 @@
             <Button Width="70" Height="70" 
                     Style="{StaticResource MaterialDesignFlatAccentButton}" 
                     Cursor="Hand" 
-                    Command="{Binding MemorizedQuickServiceApplicationCommand}" 
+                    Command="{Binding RegistrationQuickServiceApplicationCommand}" 
                     CommandParameter="{Binding ElementName=TopApplicationButtonText, Path=Text, UpdateSourceTrigger=PropertyChanged}">
 
                 <md:PackIcon Width="45" Height="45"
@@ -95,7 +95,7 @@
             <Button Width="70" Height="70" 
                     Style="{StaticResource MaterialDesignFlatAccentButton}" 
                     Cursor="Hand" 
-                    Command="{Binding MemorizedQuickServiceApplicationCommand}" 
+                    Command="{Binding RegistrationQuickServiceApplicationCommand}" 
                     CommandParameter="{Binding ElementName=RightApplicationButtonText, Path=Text, UpdateSourceTrigger=PropertyChanged}">
 
                 <md:PackIcon Width="45" Height="45"
@@ -129,7 +129,7 @@
             <Button Width="70" Height="70" 
                     Style="{StaticResource MaterialDesignFlatAccentButton}" 
                     Cursor="Hand" 
-                    Command="{Binding MemorizedQuickServiceApplicationCommand}" 
+                    Command="{Binding RegistrationQuickServiceApplicationCommand}" 
                     CommandParameter="{Binding ElementName=BottomApplicationButtonText, Path=Text, UpdateSourceTrigger=PropertyChanged}">
 
                 <md:PackIcon Width="45" Height="45"

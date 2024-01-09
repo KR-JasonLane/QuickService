@@ -30,7 +30,7 @@ public partial class TitleViewModel : ObservableRecipient, IViewModel
 
     #endregion
 
-    #region RelayCommand
+    #region Commands
 
     /// <summary>
     /// 프로세스 종료 커맨드
