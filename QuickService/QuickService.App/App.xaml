@@ -14,7 +14,7 @@
                 <ResourceDictionary Source="/QuickService.Views;component/MaterialDesign/MaterialDesignResources.xaml"/>
 
                 <!--컬러가 정의되어있는 리소스 사전을 등록-->
-                <ResourceDictionary Source="/QuickService.Common;component/Colors/ColorDictionary.xaml"/>
+                <ResourceDictionary Source="/QuickService.Views;component/Colors/ColorDictionary.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

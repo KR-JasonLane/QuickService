@@ -5,12 +5,9 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
+	<UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
-  </ItemGroup>
-	
   <ItemGroup>
     <ProjectReference Include="..\QuickService.Domain\QuickService.Domain.csproj" />
   </ItemGroup>
