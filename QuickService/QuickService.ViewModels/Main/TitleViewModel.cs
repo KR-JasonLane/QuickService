@@ -1,8 +1,6 @@
 ﻿using QuickService.Abstract.Interfaces;
-using QuickService.Domain.Services;
 
 namespace QuickService.ViewModels;
-
 public partial class TitleViewModel : ObservableRecipient, IViewModel
 {
     public TitleViewModel(ITrayIconService trayIconService, IHideMainWindowService hideMainWindowService)

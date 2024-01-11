@@ -1,5 +1,6 @@
-﻿namespace QuickService.Domain.Services;
+﻿using QuickService.Abstract.Interfaces;
 
+namespace QuickService.Domain.Services;
 public class UserSelectPathService : IUserSelectPathService
 {
     /// <summary>

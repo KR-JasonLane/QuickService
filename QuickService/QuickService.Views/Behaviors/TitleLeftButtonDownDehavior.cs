@@ -1,4 +1,4 @@
-﻿namespace QuickService.Domain.Behaviors;
+﻿namespace QuickService.Views.Behaviors;
 
 public sealed class TitleLeftButtonDownDehavior : Behavior<FrameworkElement>
 {

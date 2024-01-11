@@ -4,16 +4,18 @@ namespace QuickService.Models.Configure;
 
 public class AppInformationModel
 {
+
+	#region Properties
+
 	/// <summary>
 	/// 아이콘 이미지
 	/// </summary>
-	[JsonIgnore]
-	public ImageSource? IconImage { get; set; }
+	private ImageSource IconImage { get; set; }
 
 	/// <summary>
 	/// 어플리케이션 이름
 	/// </summary>
-	public string Name { get; set; } = string.Empty;
+	private string Name { get; set; }
 
 	/// <summary>
 	/// 어플리케이션 경로
@@ -24,6 +26,10 @@ public class AppInformationModel
 		get => _appPath!;
 		set => SetInformationPropertyFromPath(ref _appPath!, value!);
 	}
+
+	#endregion
+
+	#region Methods
 
 	/// <summary>
 	/// 경로에서 속성들을 추출
@@ -43,4 +49,18 @@ public class AppInformationModel
 			//TODO : Empty이미지 사용하기
 		}		
 	}
+
+	/// <summary>
+	/// 생성된 아이콘이미지를 반환
+	/// </summary>
+	/// <returns> 아이콘 이미지 </returns>
+	public ImageSource GetIconImage() => IconImage;
+
+	/// <summary>
+	/// 어플리케이션의 이름을 반환
+	/// </summary>
+	/// <returns> 어플리케이션의 이름 </returns>
+	public string GetAppName() => Name;
+
+	#endregion
 }

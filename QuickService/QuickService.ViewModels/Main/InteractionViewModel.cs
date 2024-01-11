@@ -1,18 +1,20 @@
 ﻿using QuickService.Abstract.Interfaces;
-using QuickService.Domain.Services;
+using QuickService.Models.Configure;
 
 namespace QuickService.ViewModels;
 
 public partial class InteractionViewModel : ObservableRecipient, IViewModel
 {
-    public InteractionViewModel(IUserSelectPathService userSelectPathService)
+    public InteractionViewModel(IUserSelectPathService userSelectPathService, IConfigurationService configurationService)
     {
         ////////////////////////////////////////
         // 서비스 등록
         ////////////////////////////////////////
         {
             _userSelectPathService = userSelectPathService;
-        }
+			_configurationService  = configurationService;
+
+		}
     }
 
     #region Properties
@@ -21,6 +23,8 @@ public partial class InteractionViewModel : ObservableRecipient, IViewModel
     /// 사용자 선택 경로 서비스
     /// </summary>
     IUserSelectPathService _userSelectPathService;
+
+    IConfigurationService _configurationService;
 
     #endregion
 
@@ -47,26 +51,21 @@ public partial class InteractionViewModel : ObservableRecipient, IViewModel
     [RelayCommand]
     private void RegistrationQuickServiceApplication(string param)
     {
-        // TODO : 파라미터에 따른 위치의 어플리케이션을 등록.
-        switch(param)
-        {
-            case "LEFT":
-                //_userSelectPathService.GetUserSelectedFilePath();
-                break;
+        var configuration = _configurationService.GetConfiguration<RegisteredApplicationModel>();
 
-            case "TOP":
-                //_userSelectPathService.GetUserSelectedFilePath();
-                break;
+        string userSelectedPath = _userSelectPathService.GetUserSelectedFilePath();
 
-            case "RIGHT":
-                //_userSelectPathService.GetUserSelectedFilePath();
-                break;
-
-            case "BOTTOM":
-                //_userSelectPathService.GetUserSelectedFilePath();
-                break;
-        }
-        
+        if(userSelectedPath != null)
+		{
+			switch (param)
+			{
+				case "LEFT"  : configuration.LeftAppInformation.AppPath   = userSelectedPath; break;
+				case "TOP"   : configuration.TopAppInformation.AppPath    = userSelectedPath; break;
+				case "RIGHT" : configuration.RightAppInformation.AppPath  = userSelectedPath; break;
+				case "BOTTOM": configuration.BottomAppInformation.AppPath = userSelectedPath; break;
+			}
+            _configurationService.SaveConfiguration(configuration);
+		}        
     }
 
     #endregion

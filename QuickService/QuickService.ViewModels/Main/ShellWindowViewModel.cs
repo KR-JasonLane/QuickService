@@ -1,7 +1,6 @@
 ﻿using QuickService.Abstract.Interfaces;
 
 namespace QuickService.ViewModels;
-
 public partial class ShellWindowViewModel : ObservableRecipient, IViewModel
 {
 	public ShellWindowViewModel()

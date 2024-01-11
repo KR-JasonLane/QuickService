@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:bhv="clr-namespace:QuickService.Domain.Behaviors;assembly=QuickService.Domain"
+             xmlns:bhv="clr-namespace:QuickService.Views.Behaviors"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:QuickService.Views"
              Background="{StaticResource BackgroundBrushMid}"

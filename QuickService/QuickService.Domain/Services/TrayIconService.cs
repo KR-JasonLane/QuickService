@@ -1,4 +1,4 @@
-﻿using System.Windows.Controls;
+﻿using QuickService.Abstract.Interfaces;
 
 namespace QuickService.Domain.Services;
 

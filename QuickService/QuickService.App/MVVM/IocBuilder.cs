@@ -1,4 +1,5 @@
-﻿using QuickService.Domain.Services;
+﻿using QuickService.Abstract.Interfaces;
+using QuickService.Domain.Services;
 using QuickService.ViewModels;
 
 namespace QuickService.App;
@@ -31,6 +32,8 @@ public static class IocBuilder
 			services.AddSingleton<IHideMainWindowService,	HideMainWindowService	>();
 			services.AddSingleton<ITrayIconService		,	TrayIconService			>();
 			services.AddSingleton<IUserSelectPathService,	UserSelectPathService	>();
+			services.AddSingleton<IJsonFileService		,	JsonFileService			>();
+			services.AddSingleton<IConfigurationService ,	ConfigurationService	>();
 		}
 
 
