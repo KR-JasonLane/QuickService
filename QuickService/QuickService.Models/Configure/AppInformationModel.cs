@@ -10,12 +10,12 @@ public class AppInformationModel
 	/// <summary>
 	/// 아이콘 이미지
 	/// </summary>
-	private ImageSource IconImage { get; set; }
+	private ImageSource? IconImage { get; set; }
 
 	/// <summary>
 	/// 어플리케이션 이름
 	/// </summary>
-	private string Name { get; set; }
+	private string? Name { get; set; }
 
 	/// <summary>
 	/// 어플리케이션 경로
@@ -44,23 +44,25 @@ public class AppInformationModel
 			Name		= Path.GetFileName(input);
 			sender		= input;
 		}
-		else
-		{
-			//TODO : Empty이미지 사용하기
-		}		
 	}
 
 	/// <summary>
 	/// 생성된 아이콘이미지를 반환
 	/// </summary>
 	/// <returns> 아이콘 이미지 </returns>
-	public ImageSource GetIconImage() => IconImage;
+	public ImageSource? GetIconImage() => IconImage;
 
 	/// <summary>
 	/// 어플리케이션의 이름을 반환
 	/// </summary>
 	/// <returns> 어플리케이션의 이름 </returns>
-	public string GetAppName() => Name;
+	public string? GetAppName() => Name;
+
+	/// <summary>
+	/// 경로가 유효한지 검사
+	/// </summary>
+	/// <returns> 유효성 여부 </returns>
+	public bool IsValidPath() => Path.Exists(AppPath);
 
 	#endregion
 }

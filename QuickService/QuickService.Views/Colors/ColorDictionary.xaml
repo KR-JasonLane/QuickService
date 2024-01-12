@@ -13,6 +13,6 @@
     <!--                                        -->
 
     <SolidColorBrush x:Key="WindowButtonForeground" Color="WhiteSmoke"/>
-    <SolidColorBrush x:Key="ForegroundMid"          Color="#003e23"/>
+    <SolidColorBrush x:Key="ForegroundMid"          Color="#003e23"   />
 
 </ResourceDictionary>

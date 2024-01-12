@@ -1,5 +1,6 @@
 ﻿using QuickService.Abstract.Interfaces;
 using QuickService.Models.Configure;
+using QuickService.ViewModels.Messenger;
 
 namespace QuickService.ViewModels;
 
@@ -13,17 +14,19 @@ public partial class InteractionViewModel : ObservableRecipient, IViewModel
         {
             _userSelectPathService = userSelectPathService;
 			_configurationService  = configurationService;
-
 		}
     }
 
-    #region Properties
+    #region Services
 
     /// <summary>
     /// 사용자 선택 경로 서비스
     /// </summary>
     IUserSelectPathService _userSelectPathService;
 
+    /// <summary>
+    /// 사용자 설정 서비스
+    /// </summary>
     IConfigurationService _configurationService;
 
     #endregion
@@ -51,8 +54,7 @@ public partial class InteractionViewModel : ObservableRecipient, IViewModel
     [RelayCommand]
     private void RegistrationQuickServiceApplication(string param)
     {
-        var configuration = _configurationService.GetConfiguration<RegisteredApplicationModel>();
-
+        var configuration       = _configurationService.GetConfiguration<RegisteredApplicationModel>();
         string userSelectedPath = _userSelectPathService.GetUserSelectedFilePath();
 
         if(userSelectedPath != null)
@@ -64,7 +66,21 @@ public partial class InteractionViewModel : ObservableRecipient, IViewModel
 				case "RIGHT" : configuration.RightAppInformation.AppPath  = userSelectedPath; break;
 				case "BOTTOM": configuration.BottomAppInformation.AppPath = userSelectedPath; break;
 			}
+
             _configurationService.SaveConfiguration(configuration);
+
+            var positions = Enum.GetNames(typeof(AppPosition)).ToList();
+            int positionIndex = 0;
+
+            foreach (var position in positions)
+            {
+                if(position.Equals(param))
+                {
+					WeakReferenceMessenger.Default.Send(new AppInformationChangedMessage((AppPosition)positionIndex));
+                    break;
+				}
+				positionIndex++;
+			}            
 		}        
     }
 

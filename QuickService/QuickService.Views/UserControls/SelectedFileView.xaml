@@ -7,8 +7,64 @@
              Background="{StaticResource BackgroundBrushDark}"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="400">
-    <Grid>
+
+    <UserControl.Resources>
+        
+        <Style x:Key="FastTooltipImage" 
+               TargetType="Image">
+
+            <Setter Value="0"
+                    Property="ToolTipService.InitialShowDelay"/>
             
+        </Style>
+
+    </UserControl.Resources>
+    
+
+    <Grid>
+
+        <Ellipse Width="300" Height="300" 
+                 Fill="{StaticResource ForegroundMid}" 
+                 Opacity="0.5"/>
+
+        <Line X1="0" Y1="0" 
+              X2="200" Y2="200" 
+              Stroke="Black" 
+              StrokeThickness="2"
+              HorizontalAlignment="Center" 
+              VerticalAlignment="Center"/>
+
+        <Line X1="0" Y1="200" 
+              X2="200" Y2="0" 
+              Stroke="Black" 
+              StrokeThickness="2"
+              HorizontalAlignment="Center" 
+              VerticalAlignment="Center"/>
+
+        <Image Width="50" Height="50"
+               Margin="0,0,180,0"
+               Style="{StaticResource FastTooltipImage}"
+               Source="{Binding LeftAppIconImageSource}" 
+               ToolTip="{Binding LeftAppName}"/>
+
+        <Image Width="50" Height="50"
+               Margin="0,0,0,180"
+               Style="{StaticResource FastTooltipImage}"
+               Source="{Binding TopAppIconImageSource}" 
+               ToolTip="{Binding TopAppName}"/>
+
+        <Image Width="50" Height="50" 
+               Margin="180,0,0,0"
+               Style="{StaticResource FastTooltipImage}"
+               Source="{Binding RightAppIconImageSource}" 
+               ToolTip="{Binding RightAppName}"/>
+
+        <Image Width="50" Height="50" 
+               Margin="0,180,0,0"
+               Style="{StaticResource FastTooltipImage}"
+               Source="{Binding BottomAppIconImageSource}" 
+               ToolTip="{Binding BottomAppName}"/>
+
     </Grid>
     
 </UserControl>
