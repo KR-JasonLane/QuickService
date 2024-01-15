@@ -11,11 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\TItle\QuickServiceLogo.png" />
+    <None Remove="Resources\Title\QuickServiceLogo.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\TItle\QuickService.ico" />
+    <Content Include="Resources\Title\QuickService.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,9 +26,51 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\TItle\QuickServiceLogo.png">
+    <Resource Include="Resources\Title\QuickServiceLogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+  	<Resource Include="Resources\Image\BackBoard.png">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+  	<Resource Include="Resources\Image\HighLightBottom.png">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</Resource>
+  </ItemGroup>
+  
+  <ItemGroup>
+  	<Resource Include="Resources\Image\HighLightLeft.png">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</Resource>
+  </ItemGroup>
+  
+  <ItemGroup>
+  	<Resource Include="Resources\Image\HighLightRight.png">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</Resource>
+  </ItemGroup>
+  
+  <ItemGroup>
+  	<Resource Include="Resources\Image\HighLightTop.png">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</Resource>
+  </ItemGroup>
+  
+  <ItemGroup>
+  	<Resource Include="Resources\Image\NoneSelect.png">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</Resource>
+  </ItemGroup>
+  
+  <ItemGroup>
+  	<Resource Include="Resources\Image\Pointer.png">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</Resource>
   </ItemGroup>
 
 </Project>

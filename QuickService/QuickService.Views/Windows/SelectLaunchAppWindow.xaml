@@ -1,0 +1,96 @@
+﻿<Window x:Class="QuickService.Views.SelectLaunchAppWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuickService.Views"
+        xmlns:cvt="clr-namespace:QuickService.Domain.Converters;assembly=QuickService.Domain"
+        mc:Ignorable="d"
+        WindowStyle="None" Background="Transparent" AllowsTransparency="True"
+        Title="ToastWindow" Height="300" Width="300" 
+        Topmost="True">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="0" GlassFrameThickness="0" CaptionHeight="0" />
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <cvt:BooleanToVisibilityConverter        x:Key="BooleanToVisibilityConverter"/>
+        <cvt:BooleanToVisibilityReverseConverter x:Key="BooleanToVisibilityReverseConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid x:Name="AnimationGrid" 
+              Width="0" Height="0">
+
+            <Image x:Name="BackBoard" 
+                   Width="Auto" Height="Auto"
+                   Source="/QuickService.App;component/Resources/Image/BackBoard.png"/>
+
+            <Image x:Name="HighLightLeft" 
+                   Width="Auto" Height="Auto"
+                   Source="/QuickService.App;component/Resources/Image/HighLightLeft.png" 
+                   Visibility="{Binding IsSelectedLeft, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            
+            <Image x:Name="HighLightTop" 
+                   Width="Auto" Height="Auto"
+                   Source="/QuickService.App;component/Resources/Image/HighLightTop.png" 
+                   Visibility="{Binding IsSelectedTop, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            
+            <Image x:Name="HighLightRight" 
+                   Width="Auto" Height="Auto"
+                   Source="/QuickService.App;component/Resources/Image/HighLightRight.png" 
+                   Visibility="{Binding IsSelectedRight, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            
+            <Image x:Name="HighLightBottom" 
+                   Width="Auto" Height="Auto"
+                   Source="/QuickService.App;component/Resources/Image/HighLightBottom.png" 
+                   Visibility="{Binding IsSelectedBottom, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <Image x:Name="NoneSelect"                    
+                   Width="Auto" Height="Auto"
+                   Source="/QuickService.App;component/Resources/Image/NoneSelect.png" />
+
+            <Image x:Name="Pointer" 
+                   Width="Auto" Height="Auto"
+                   Source="/QuickService.App;component/Resources/Image/Pointer.png" 
+                   Visibility="{Binding IsNoneSelect, Converter={StaticResource BooleanToVisibilityReverseConverter}}"
+                   RenderTransformOrigin="0.5,0.5">
+                
+                <Image.RenderTransform>                    
+                    <TransformGroup>
+                        <RotateTransform Angle="{Binding PointerAngle}"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+                
+            </Image>
+
+            <Image Width="50" Height="50" 
+                   Margin="40,0,0,0" 
+                   HorizontalAlignment="Left"
+                   Source="{Binding LeftAppIconImageSource}"/>
+            
+            <Image Width="50" Height="50" 
+                   Margin="0,0,40,0" 
+                   HorizontalAlignment="Right"
+                   Source="{Binding RightAppIconImageSource}"/>
+            
+            <Image Width="50" Height="50" 
+                   Margin="0,40,0,0" 
+                   VerticalAlignment="Top"
+                   Source="{Binding TopAppIconImageSource}"/>
+            
+            <Image Width="50" Height="50" 
+                   Margin="0,0,0,40" 
+                   VerticalAlignment="Bottom"                   
+                   Source="{Binding BottomAppIconImageSource}"/>
+
+            <Ellipse x:Name="NoneSelectArea" 
+                     Fill="Transparent"
+                     Width="52" Height="52"/>
+
+        </Grid>
+
+    </Grid>
+    
+</Window>    

@@ -1,6 +1,5 @@
-﻿
-using QuickService.Abstract.Interfaces;
-using QuickService.ViewModels;
+﻿using QuickService.ViewModels;
+
 using QuickService.Views;
 
 namespace QuickService.App;
@@ -29,9 +28,18 @@ public partial class App : Application
 		// Shell Window
 		////////////////////////////////////////
 		{
-			ShellWindow window = new() { DataContext = Ioc.Default.GetService<ShellWindowViewModel>() };			
+			ShellWindow shellwindow = new() { DataContext = Ioc.Default.GetService<ShellWindowViewModel>() };
 
-			window.ShowDialog();
+			shellwindow.ShowDialog();
+		}
+
+		////////////////////////////////////////
+		// Shell Window
+		////////////////////////////////////////
+		{
+			SelectLaunchAppWindow selectLaunchAppwindow = new() { DataContext = Ioc.Default.GetService<SelectLaunchAppWindowViewModel>() };
+
+			selectLaunchAppwindow.Hide();
 		}
 	}
 
