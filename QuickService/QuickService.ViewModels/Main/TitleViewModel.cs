@@ -41,7 +41,7 @@ public partial class TitleViewModel : ObservableRecipient, IViewModel
     {
         _hideMainWindowService.HideMainWindow();
         _trayIconService.VisibleTrayIconOnTaskBar(true);
-    }
+	}
 
 	#endregion
 

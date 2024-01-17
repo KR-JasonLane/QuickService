@@ -1,5 +1,5 @@
-﻿using QuickService.ViewModels;
-
+﻿using QuickService.Abstract.Interfaces;
+using QuickService.ViewModels;
 using QuickService.Views;
 
 namespace QuickService.App;
@@ -25,21 +25,20 @@ public partial class App : Application
 		base.OnStartup(e);
 
 		////////////////////////////////////////
+		// Global Hook
+		////////////////////////////////////////
+		{
+			Ioc.Default.GetService<IGlobalMouseHookService>()!.SetHook();
+		}
+
+
+		////////////////////////////////////////
 		// Shell Window
 		////////////////////////////////////////
 		{
 			ShellWindow shellwindow = new() { DataContext = Ioc.Default.GetService<ShellWindowViewModel>() };
 
 			shellwindow.ShowDialog();
-		}
-
-		////////////////////////////////////////
-		// Shell Window
-		////////////////////////////////////////
-		{
-			SelectLaunchAppWindow selectLaunchAppwindow = new() { DataContext = Ioc.Default.GetService<SelectLaunchAppWindowViewModel>() };
-
-			selectLaunchAppwindow.Hide();
 		}
 	}
 

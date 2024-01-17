@@ -29,11 +29,12 @@ public static class IocBuilder
 		// Services
 		////////////////////////////////////////
 		{
-			services.AddSingleton<IHideMainWindowService,	HideMainWindowService	>();
-			services.AddSingleton<ITrayIconService		,	TrayIconService			>();
-			services.AddSingleton<IUserSelectPathService,	UserSelectPathService	>();
-			services.AddSingleton<IJsonFileService		,	JsonFileService			>();
-			services.AddSingleton<IConfigurationService ,	ConfigurationService	>();
+			services.AddSingleton<IHideMainWindowService  ,	HideMainWindowService	>();
+			services.AddSingleton<ITrayIconService		  ,	TrayIconService			>();
+			services.AddSingleton<IUserSelectPathService  ,	UserSelectPathService	>();
+			services.AddSingleton<IJsonFileService		  ,	JsonFileService			>();
+			services.AddSingleton<IConfigurationService   ,	ConfigurationService	>();
+			services.AddSingleton<IGlobalMouseHookService , GlobalMouseHookService  >();
 		}
 
 
