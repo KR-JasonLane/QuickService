@@ -14,7 +14,7 @@ public partial class App : Application
 		IocBuilder.Build();
 	}
 
-	#region Methods
+	#region Override Methods
 
 	/// <summary>
 	/// 시스템 시작
@@ -28,7 +28,8 @@ public partial class App : Application
 		// Global Hook
 		////////////////////////////////////////
 		{
-			Ioc.Default.GetService<IGlobalMouseHookService>()!.SetHook();
+			Ioc.Default.GetService<IGlobalMouseHookService	 >()!.SetHook();
+			Ioc.Default.GetService<IGlobalKeyboardHookService>()!.SetHook();
 		}
 
 
@@ -37,9 +38,28 @@ public partial class App : Application
 		////////////////////////////////////////
 		{
 			ShellWindow shellwindow = new() { DataContext = Ioc.Default.GetService<ShellWindowViewModel>() };
+			shellwindow.Show();
 
-			shellwindow.ShowDialog();
+			Current.MainWindow = shellwindow;
 		}
+	}
+
+	/// <summary>
+	/// 시스템 종료
+	/// </summary>
+	/// <param name="e"> 이벤트 파라미터 </param>
+	protected override void OnExit(ExitEventArgs e)
+	{
+		base.OnExit(e);
+
+		////////////////////////////////////////
+		// Global Hook
+		////////////////////////////////////////
+		{
+			Ioc.Default.GetService<IGlobalMouseHookService	 >()!.UnHook();
+			Ioc.Default.GetService<IGlobalKeyboardHookService>()!.UnHook();
+		}
+
 	}
 
 	#endregion

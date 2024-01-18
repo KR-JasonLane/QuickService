@@ -34,8 +34,11 @@ public partial class TitleViewModel : ObservableRecipient, IViewModel
     /// 프로세스 종료 커맨드
     /// </summary>
     [RelayCommand]
-    private void KillProcess() => Process.GetCurrentProcess().Kill();
+    private void KillProcess() => Application.Current.Shutdown();
 
+    /// <summary>
+    /// 메인윈도우를 숨기고 트레이 아이콘 설치
+    /// </summary>
     [RelayCommand]
     private void HideWindowAndVisibleTrayIcon()
     {
