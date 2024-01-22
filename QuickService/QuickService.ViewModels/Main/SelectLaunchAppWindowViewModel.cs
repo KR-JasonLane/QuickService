@@ -48,12 +48,18 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 	[ObservableProperty]
 	private double _pointerAngle;
 
+	/// <summary>
+	/// 윈도우가 Show됨을 알림
+	/// </summary>
+	[ObservableProperty]
+	private bool _isShowWindow;
+
 
 	/// <summary>
 	/// 좌측 앱 아이콘 이미지
 	/// </summary>
 	[ObservableProperty]
-	private ImageSource _leftAppIconImageSorce;
+	private ImageSource _leftAppIconImageSource;
 
 	/// <summary>
 	/// 상단 앱 아이콘 이미지

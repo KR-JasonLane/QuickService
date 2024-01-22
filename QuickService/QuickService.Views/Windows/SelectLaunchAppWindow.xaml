@@ -17,11 +17,35 @@
     <Window.Resources>
         <cvt:BooleanToVisibilityConverter        x:Key="BooleanToVisibilityConverter"/>
         <cvt:BooleanToVisibilityReverseConverter x:Key="BooleanToVisibilityReverseConverter"/>
+
+        <Style x:Key="AnimationGrid" TargetType="Grid">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsShowWindow}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Width" To="300" Duration="0:0:0.1"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" To="300" Duration="0:0:0.1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Width" To="0" Duration="0:0:0.1"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" To="0" Duration="0:0:0.1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid>
         <Grid x:Name="AnimationGrid" 
-              Width="0" Height="0">
+              Width="0" Height="0"
+              Style="{StaticResource AnimationGrid}">
 
             <Image x:Name="BackBoard" 
                    Width="Auto" Height="Auto"

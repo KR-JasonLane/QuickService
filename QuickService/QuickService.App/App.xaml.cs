@@ -42,6 +42,14 @@ public partial class App : Application
 
 			Current.MainWindow = shellwindow;
 		}
+
+		////////////////////////////////////////
+		// Selected Launch App Window
+		////////////////////////////////////////
+		{
+			SelectLaunchAppWindow selectLaunchAppWindow = new() { DataContext = Ioc.Default.GetService<SelectLaunchAppWindowViewModel>() };
+			selectLaunchAppWindow.Show();
+		}
 	}
 
 	/// <summary>
