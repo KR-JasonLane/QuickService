@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuickService.Abstract\QuickService.Abstract.csproj" />
+    <ProjectReference Include="..\QuickService.Extensions\QuickService.Extensions.csproj" />
     <ProjectReference Include="..\QuickService.Models\QuickService.Models.csproj" />
   </ItemGroup>
 

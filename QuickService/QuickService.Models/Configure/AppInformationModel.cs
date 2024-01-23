@@ -1,4 +1,4 @@
-﻿using QuickService.Domain.Extensions;
+﻿using QuickService.Extensions;
 
 namespace QuickService.Models.Configure;
 

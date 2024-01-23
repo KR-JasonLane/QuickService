@@ -20,7 +20,7 @@
 
         <Style x:Key="AnimationGrid" TargetType="Grid">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsShowWindow}" Value="True">
+                <DataTrigger Binding="{Binding IsWindowOpen}" Value="True">
                     <DataTrigger.EnterActions>
                         <BeginStoryboard>
                             <Storyboard>

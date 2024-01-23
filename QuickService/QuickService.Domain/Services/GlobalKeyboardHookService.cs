@@ -4,15 +4,16 @@ namespace QuickService.Domain.Services;
 
 public class GlobalKeyboardHookService : IGlobalKeyboardHookService
 {
-	public GlobalKeyboardHookService()
+	public GlobalKeyboardHookService(IGlobalMouseHookService mouseHookService)
 	{
 		////////////////////////////////////////
-		// 키보드 이벤트 메시지
+		// 키보드 이벤트
 		////////////////////////////////////////
 		{
 			WH_KEYBOARD_LL  = 13;
 			WM_KEYUP		= 0x0101;
 			WM_KEYDOWN		= 0x0104;
+			VK_ALT			= 164;
 		}
 
 
@@ -21,6 +22,14 @@ public class GlobalKeyboardHookService : IGlobalKeyboardHookService
 		////////////////////////////////////////
 		{
 			_keyboardProc = KeyboardHookProc;
+		}
+
+
+		////////////////////////////////////////
+		// 대리자 설정
+		////////////////////////////////////////
+		{
+			_mouseHookService = mouseHookService;
 		}
 	}
 
@@ -66,17 +75,22 @@ public class GlobalKeyboardHookService : IGlobalKeyboardHookService
 	/// <summary>
 	/// 키보드 이벤트 핸들
 	/// </summary>
-	private readonly int WH_KEYBOARD_LL = 13;
+	private readonly int WH_KEYBOARD_LL;
 
 	/// <summary>
 	/// 키 업 이벤트 
 	/// </summary>
-	private readonly int WM_KEYUP = 0x0101;
+	private readonly int WM_KEYUP;
 
 	/// <summary>
 	/// 키 다운 이벤트
 	/// </summary>
-	private readonly int WM_KEYDOWN = 0x0104;
+	private readonly int WM_KEYDOWN;
+
+	/// <summary>
+	/// Alt키 코드
+	/// </summary>
+	private readonly int VK_ALT;
 
 	/// <summary>
 	/// 키보드 프로시저 대리자 객체
@@ -87,6 +101,11 @@ public class GlobalKeyboardHookService : IGlobalKeyboardHookService
 	/// 현재 후킹중인 핸들
 	/// </summary>
 	private static IntPtr _handleHookMouse = IntPtr.Zero;
+
+	/// <summary>
+	/// 마우스 후킹 서비스
+	/// </summary>
+	private readonly IGlobalMouseHookService _mouseHookService;
 
 	#endregion
 
@@ -116,13 +135,18 @@ public class GlobalKeyboardHookService : IGlobalKeyboardHookService
 	{
 		if (code >= 0)
 		{
-			if(wParam == WM_KEYUP)
-			{
+			int vkCode = Marshal.ReadInt32(lParam);
 
-			}
-			else if (wParam == WM_KEYDOWN)
+			if (vkCode == VK_ALT)
 			{
-
+				if (wParam == WM_KEYUP)
+				{
+					_mouseHookService.SetModifierKeyDownState(false);
+				}
+				else if (wParam == WM_KEYDOWN)
+				{
+					_mouseHookService.SetModifierKeyDownState(true);
+				}
 			}
 		}
 

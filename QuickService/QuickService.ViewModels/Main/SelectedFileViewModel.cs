@@ -1,6 +1,6 @@
 ﻿using QuickService.Abstract.Interfaces;
 using QuickService.Models.Configure;
-using QuickService.Domain.Extensions;
+using QuickService.Extensions;
 using QuickService.ViewModels.Messenger;
 
 namespace QuickService.ViewModels;
@@ -9,7 +9,7 @@ public partial class SelectedFileViewModel : ObservableRecipient, IViewModel
     public SelectedFileViewModel(IConfigurationService configurationService)
     {
 		////////////////////////////////////////
-		// 사용자 설정 로드
+		// 메신저 등록
 		////////////////////////////////////////
 		{
 			WeakReferenceMessenger.Default.Register<AppInformationChangedMessage>(this, (r, m) =>

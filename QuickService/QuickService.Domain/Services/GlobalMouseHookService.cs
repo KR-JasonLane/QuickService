@@ -1,4 +1,5 @@
 ﻿using QuickService.Abstract.Interfaces;
+using QuickService.ViewModels.Messenger;
 
 namespace QuickService.Domain.Services;
 
@@ -94,6 +95,11 @@ public class GlobalMouseHookService : IGlobalMouseHookService
 	/// </summary>
 	private static IntPtr _handleHookMouse = IntPtr.Zero;
 
+	/// <summary>
+	/// 조합키 눌림 여부
+	/// </summary>
+	private bool _isModifierKeyDown;
+
 	#endregion
 
 	#region Methods
@@ -120,24 +126,30 @@ public class GlobalMouseHookService : IGlobalMouseHookService
 	/// </summary>
 	public IntPtr MouseHookProc(int code, IntPtr wParam, IntPtr lParam)
 	{
-		if (code >= 0)
+		if (code >= 0 && _isModifierKeyDown is true)
 		{
 			if(wParam == WM_LBUTTONDOWN)
 			{
-
+				WeakReferenceMessenger.Default.Send(new ClickMouseMessage(true));
 			}
 			else if (wParam == WM_LBUTTONUP)
 			{
-
+				WeakReferenceMessenger.Default.Send(new ClickMouseMessage(false));
 			}
 			else if (wParam == WM_MOUSEMOVE)
 			{
-
+				
 			}
 		}
 
 		return CallNextHookEx(_handleHookMouse, code, (int)wParam, lParam);
 	}
+
+	/// <summary>
+	/// 조합키가 눌려져 있는지에 대한 상태 업데이트
+	/// </summary>
+	/// <param name="isDown"> 조합키 눌림 여부 </param>
+	public void SetModifierKeyDownState(bool isDown) => _isModifierKeyDown = isDown;
 
 	#endregion
 }

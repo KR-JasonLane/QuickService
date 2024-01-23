@@ -1,4 +1,4 @@
-﻿namespace QuickService.Domain.Extensions;
+﻿namespace QuickService.Extensions;
 
 /// <summary>
 /// Bitmap 확장메서드

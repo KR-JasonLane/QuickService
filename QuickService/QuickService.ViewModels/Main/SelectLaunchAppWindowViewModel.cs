@@ -1,4 +1,5 @@
 ﻿using QuickService.Abstract.Interfaces;
+using QuickService.ViewModels.Messenger;
 
 namespace QuickService.ViewModels;
 
@@ -6,7 +7,15 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 {
 	public SelectLaunchAppWindowViewModel()
 	{
-
+		////////////////////////////////////////
+		// 메신저 등록
+		////////////////////////////////////////
+		{
+			WeakReferenceMessenger.Default.Register<ClickMouseMessage>(this, (r, m) =>
+			{
+				IsWindowOpen = m.Value;
+			});
+		}
 	}
 
 	#region Properties
@@ -52,7 +61,7 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 	/// 윈도우가 Show됨을 알림
 	/// </summary>
 	[ObservableProperty]
-	private bool _isShowWindow;
+	private bool _isWindowOpen;
 
 
 	/// <summary>

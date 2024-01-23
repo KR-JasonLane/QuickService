@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -7,9 +7,5 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\QuickService.Extensions\QuickService.Extensions.csproj" />
-  </ItemGroup>
 
 </Project>
