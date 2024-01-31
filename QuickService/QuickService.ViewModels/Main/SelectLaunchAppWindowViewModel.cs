@@ -11,9 +11,15 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 		// 메신저 등록
 		////////////////////////////////////////
 		{
-			WeakReferenceMessenger.Default.Register<ClickMouseMessage>(this, (r, m) =>
+			WeakReferenceMessenger.Default.Register<MouseClickStateMessage>(this, (r, m) =>
 			{
 				IsWindowOpen = m.Value;
+			});
+
+			WeakReferenceMessenger.Default.Register<ModifierKeyStateMessage>(this, (r, m) =>
+			{
+				if (m.Value is false)
+					IsWindowOpen = false;
 			});
 		}
 	}

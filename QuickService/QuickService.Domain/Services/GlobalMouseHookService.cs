@@ -8,6 +8,17 @@ public class GlobalMouseHookService : IGlobalMouseHookService
 	public GlobalMouseHookService()
 	{
 		////////////////////////////////////////
+		// 메신저 등록
+		////////////////////////////////////////
+		{
+			WeakReferenceMessenger.Default.Register<ModifierKeyStateMessage>(this, (r, m) =>
+			{
+				_isModifierKeyDown = m.Value;
+			});
+		}
+
+
+		////////////////////////////////////////
 		// 마우스 이벤트 메시지
 		////////////////////////////////////////
 		{
@@ -130,11 +141,11 @@ public class GlobalMouseHookService : IGlobalMouseHookService
 		{
 			if(wParam == WM_LBUTTONDOWN)
 			{
-				WeakReferenceMessenger.Default.Send(new ClickMouseMessage(true));
+				WeakReferenceMessenger.Default.Send(new MouseClickStateMessage(true));
 			}
 			else if (wParam == WM_LBUTTONUP)
 			{
-				WeakReferenceMessenger.Default.Send(new ClickMouseMessage(false));
+				WeakReferenceMessenger.Default.Send(new MouseClickStateMessage(false));
 			}
 			else if (wParam == WM_MOUSEMOVE)
 			{
@@ -144,12 +155,6 @@ public class GlobalMouseHookService : IGlobalMouseHookService
 
 		return CallNextHookEx(_handleHookMouse, code, (int)wParam, lParam);
 	}
-
-	/// <summary>
-	/// 조합키가 눌려져 있는지에 대한 상태 업데이트
-	/// </summary>
-	/// <param name="isDown"> 조합키 눌림 여부 </param>
-	public void SetModifierKeyDownState(bool isDown) => _isModifierKeyDown = isDown;
 
 	#endregion
 }

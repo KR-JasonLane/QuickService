@@ -1,10 +1,11 @@
 ﻿using QuickService.Abstract.Interfaces;
+using QuickService.ViewModels.Messenger;
 
 namespace QuickService.Domain.Services;
 
 public class GlobalKeyboardHookService : IGlobalKeyboardHookService
 {
-	public GlobalKeyboardHookService(IGlobalMouseHookService mouseHookService)
+	public GlobalKeyboardHookService()
 	{
 		////////////////////////////////////////
 		// 키보드 이벤트
@@ -22,14 +23,6 @@ public class GlobalKeyboardHookService : IGlobalKeyboardHookService
 		////////////////////////////////////////
 		{
 			_keyboardProc = KeyboardHookProc;
-		}
-
-
-		////////////////////////////////////////
-		// 대리자 설정
-		////////////////////////////////////////
-		{
-			_mouseHookService = mouseHookService;
 		}
 	}
 
@@ -102,11 +95,6 @@ public class GlobalKeyboardHookService : IGlobalKeyboardHookService
 	/// </summary>
 	private static IntPtr _handleHookMouse = IntPtr.Zero;
 
-	/// <summary>
-	/// 마우스 후킹 서비스
-	/// </summary>
-	private readonly IGlobalMouseHookService _mouseHookService;
-
 	#endregion
 
 	#region Methods
@@ -141,11 +129,11 @@ public class GlobalKeyboardHookService : IGlobalKeyboardHookService
 			{
 				if (wParam == WM_KEYUP)
 				{
-					_mouseHookService.SetModifierKeyDownState(false);
+					WeakReferenceMessenger.Default.Send(new ModifierKeyStateMessage(false));
 				}
 				else if (wParam == WM_KEYDOWN)
 				{
-					_mouseHookService.SetModifierKeyDownState(true);
+					WeakReferenceMessenger.Default.Send(new ModifierKeyStateMessage(true));
 				}
 			}
 		}
