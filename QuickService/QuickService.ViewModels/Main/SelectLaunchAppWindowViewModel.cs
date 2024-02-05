@@ -13,7 +13,10 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 		{
 			WeakReferenceMessenger.Default.Register<MouseClickStateMessage>(this, (r, m) =>
 			{
-				IsWindowOpen = m.Value;
+				IsWindowOpen   = m.Value.IsDown;
+
+				LeftCoordinate = m.Value.X;
+				TopCoordinate  = m.Value.Y;
 			});
 
 			WeakReferenceMessenger.Default.Register<ModifierKeyStateMessage>(this, (r, m) =>
@@ -93,6 +96,18 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 	/// </summary>
 	[ObservableProperty]
 	private ImageSource _bottomAppIconImageSource;
+
+	/// <summary>
+	/// 윈도우의 Left좌표
+	/// </summary>
+	[ObservableProperty]
+	private double _leftCoordinate;
+
+	/// <summary>
+	/// 윈도우의 Top좌표
+	/// </summary>
+	[ObservableProperty]
+	private double _topCoordinate;
 
 	#endregion
 

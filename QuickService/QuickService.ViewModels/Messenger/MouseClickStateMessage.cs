@@ -1,6 +1,8 @@
-﻿namespace QuickService.ViewModels.Messenger;
+﻿using QuickService.ViewModels.Messenger.Parameters;
 
-public class MouseClickStateMessage : ValueChangedMessage<bool>
+namespace QuickService.ViewModels.Messenger;
+
+public class MouseClickStateMessage : ValueChangedMessage<MouseClickParameter>
 {
-	public MouseClickStateMessage(bool isDown) : base(isDown) { }
+	public MouseClickStateMessage(MouseClickParameter param) : base(param) { }
 }

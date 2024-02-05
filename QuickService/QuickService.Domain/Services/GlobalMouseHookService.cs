@@ -1,5 +1,6 @@
 ﻿using QuickService.Abstract.Interfaces;
 using QuickService.ViewModels.Messenger;
+using QuickService.ViewModels.Messenger.Parameters;
 
 namespace QuickService.Domain.Services;
 
@@ -141,11 +142,23 @@ public class GlobalMouseHookService : IGlobalMouseHookService
 		{
 			if(wParam == WM_LBUTTONDOWN)
 			{
-				WeakReferenceMessenger.Default.Send(new MouseClickStateMessage(true));
+				var param = new MouseClickParameter()
+				{
+					IsDown = true,
+					X = Cursor.Position.X,
+					Y = Cursor.Position.Y
+				};
+
+				WeakReferenceMessenger.Default.Send(new MouseClickStateMessage(param));
 			}
 			else if (wParam == WM_LBUTTONUP)
 			{
-				WeakReferenceMessenger.Default.Send(new MouseClickStateMessage(false));
+				var param = new MouseClickParameter()
+				{
+					IsDown = false,
+				};
+
+				WeakReferenceMessenger.Default.Send(new MouseClickStateMessage(param));
 			}
 			else if (wParam == WM_MOUSEMOVE)
 			{
