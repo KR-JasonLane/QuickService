@@ -6,8 +6,14 @@
         xmlns:local="clr-namespace:QuickService.Views"
         xmlns:cvt="clr-namespace:QuickService.Domain.Converters;assembly=QuickService.Domain"
         mc:Ignorable="d"
-        WindowStyle="None" Background="Transparent" AllowsTransparency="True"
-        Title="ToastWindow" Height="300" Width="300" 
+        WindowStyle="None" 
+        Background="Transparent" 
+        AllowsTransparency="True"
+        Title="ToastWindow" 
+        Left="{Binding PositionLeft, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Top="{Binding PositionTop, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Height="{Binding WindowLength, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+        Width="{Binding WindowLength, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
         Topmost="True">
 
     <WindowChrome.WindowChrome>

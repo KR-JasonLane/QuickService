@@ -15,8 +15,11 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 			{
 				IsWindowOpen   = m.Value.IsDown;
 
-				LeftCoordinate = m.Value.X;
-				TopCoordinate  = m.Value.Y;
+				if (m.Value.IsDown)
+				{
+					PositionLeft = m.Value.X - (WindowLength / 2);
+					PositionTop  = m.Value.Y - (WindowLength / 2);
+				}
 			});
 
 			WeakReferenceMessenger.Default.Register<ModifierKeyStateMessage>(this, (r, m) =>
@@ -24,6 +27,14 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 				if (m.Value is false)
 					IsWindowOpen = false;
 			});
+		}
+
+
+		////////////////////////////////////////
+		// 바인딩 속성
+		////////////////////////////////////////
+		{
+			WindowLength = 300;
 		}
 	}
 
@@ -101,13 +112,19 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 	/// 윈도우의 Left좌표
 	/// </summary>
 	[ObservableProperty]
-	private double _leftCoordinate;
+	private double _positionLeft;
 
 	/// <summary>
 	/// 윈도우의 Top좌표
 	/// </summary>
 	[ObservableProperty]
-	private double _topCoordinate;
+	private double _positionTop;
+
+	/// <summary>
+	/// 윈도우의 가로,세로 길이
+	/// </summary>
+	[ObservableProperty]
+	private double _windowLength;
 
 	#endregion
 
