@@ -27,6 +27,13 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 				if (m.Value is false)
 					IsWindowOpen = false;
 			});
+
+			WeakReferenceMessenger.Default.Register<MouseMoveMessage>(this, (r, m) =>
+			{
+				if (IsWindowOpen is false) return;
+				
+				//TODO 마우스 이동 좌표에 따른 이미지 처리
+			});
 		}
 
 

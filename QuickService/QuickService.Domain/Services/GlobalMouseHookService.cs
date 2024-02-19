@@ -162,7 +162,13 @@ public class GlobalMouseHookService : IGlobalMouseHookService
 			}
 			else if (wParam == WM_MOUSEMOVE)
 			{
-				
+				var param = new MouseCoordinateParameter()
+				{
+					X = Cursor.Position.X,
+					Y = Cursor.Position.Y
+				};
+
+				WeakReferenceMessenger.Default.Send(new MouseMoveMessage(param));
 			}
 		}
 
