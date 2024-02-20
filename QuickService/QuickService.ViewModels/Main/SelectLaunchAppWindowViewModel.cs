@@ -14,11 +14,14 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 			WeakReferenceMessenger.Default.Register<MouseClickStateMessage>(this, (r, m) =>
 			{
 				IsWindowOpen   = m.Value.IsDown;
+				IsNoneSelect   = true          ;
 
 				if (m.Value.IsDown)
 				{
 					PositionLeft = m.Value.X - (WindowLength / 2);
 					PositionTop  = m.Value.Y - (WindowLength / 2);
+
+					_currentWindowCenter = new Point(m.Value.X, m.Value.Y);
 				}
 			});
 
@@ -30,9 +33,8 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 
 			WeakReferenceMessenger.Default.Register<MouseMoveMessage>(this, (r, m) =>
 			{
-				if (IsWindowOpen is false) return;
-				
-				//TODO 마우스 이동 좌표에 따른 이미지 처리
+				if (IsWindowOpen) 
+					CalculateMousePoint(new Point(m.Value.X, m.Value.Y));
 			});
 		}
 
@@ -41,7 +43,8 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 		// 바인딩 속성
 		////////////////////////////////////////
 		{
-			WindowLength = 300;
+			WindowLength        = 300; //윈도우 크기
+			InvalidAreaDiameter = 52 ; //무효영역 크기
 		}
 	}
 
@@ -133,6 +136,17 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 	[ObservableProperty]
 	private double _windowLength;
 
+	/// <summary>
+	/// 무효영역의 지름
+	/// </summary>
+	[ObservableProperty]
+	private double _invalidAreaDiameter;
+
+	/// <summary>
+	/// 현재 윈도우의 가운데 좌표 저장
+	/// </summary>
+	private Point _currentWindowCenter;
+
 	#endregion
 
 	#region Commands
@@ -140,6 +154,43 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 	#endregion
 
 	#region Methods
+
+	/// <summary>
+	/// 마우스 좌표를 계산
+	/// </summary>
+	/// <param name="mousePosition"> 현재 마우스의 위치 </param>
+	private void CalculateMousePoint(Point mousePosition)
+	{
+		if(CheckMouseInInvalidArea(mousePosition))
+		{
+			IsNoneSelect = true;
+			return;
+		}
+
+		IsNoneSelect = false;
+
+		double deltaX = mousePosition       .X - _currentWindowCenter.X;
+		double deltaY = _currentWindowCenter.Y - mousePosition       .Y;
+		double angle = Math.Atan2(deltaY, deltaX) * (180 / Math.PI);
+
+		PointerAngle = -angle + 90;
+	}
+
+	/// <summary>
+	/// 마우스가 무효영역에 있는지 확인
+	/// </summary>
+	/// <param name="mouse"> 현재 마우스 위치 </param>
+	/// <returns> 마우스가 무효영역에 위치해 있는지 여부</returns>
+	private bool CheckMouseInInvalidArea(Point mousePosition)
+	{
+		double ellipseRadiusX = InvalidAreaDiameter / 2;
+		double ellipseRadiusY = InvalidAreaDiameter / 2;
+
+		double distance = Math.Sqrt(Math.Pow(mousePosition.X - _currentWindowCenter.X, 2) / Math.Pow(ellipseRadiusX, 2) +
+									Math.Pow(mousePosition.Y - _currentWindowCenter.Y, 2) / Math.Pow(ellipseRadiusY, 2));
+
+		return distance <= 1.0;
+	}
 
 	#endregion
 }

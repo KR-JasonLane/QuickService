@@ -117,7 +117,7 @@
 
             <Ellipse x:Name="NoneSelectArea" 
                      Fill="Transparent"
-                     Width="52" Height="52"/>
+                     Width="{Binding InvalidAreaDiameter}" Height="{Binding InvalidAreaDiameter}"/>
 
         </Grid>
 
