@@ -163,6 +163,7 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 	{
 		if(CheckMouseInInvalidArea(mousePosition))
 		{
+			TurnOffSelectedFlags();
 			IsNoneSelect = true;
 			return;
 		}
@@ -174,6 +175,8 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 		double angle = Math.Atan2(deltaY, deltaX) * (180 / Math.PI);
 
 		PointerAngle = -angle + 90;
+
+		CalculatePointedPosition(angle);
 	}
 
 	/// <summary>
@@ -190,6 +193,38 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 									Math.Pow(mousePosition.Y - _currentWindowCenter.Y, 2) / Math.Pow(ellipseRadiusY, 2));
 
 		return distance <= 1.0;
+	}
+
+	/// <summary>
+	/// 마우스가 가리키고있는 영역을 계산
+	/// </summary>
+	/// <param name="angle"> 마우스의 각도</param>
+	private void CalculatePointedPosition(double angle)
+	{
+		TurnOffSelectedFlags();
+
+		if(angle < 0) angle += 360;
+
+		IsSelectedTop    = angle >= 45  && angle < 135;
+		IsSelectedLeft   = angle >= 135 && angle < 225;
+		IsSelectedBottom = angle >= 225 && angle < 315;
+		IsSelectedRight  = angle >= 315 || angle < 45;
+
+		if (IsSelectedLeft || IsSelectedTop || IsSelectedRight || IsSelectedBottom)
+		{
+			IsNoneSelect = false;
+		}
+	}
+
+	/// <summary>
+	/// 모든 선택플래그를 끔
+	/// </summary>
+	private void TurnOffSelectedFlags()
+	{
+		IsSelectedLeft   = false;
+		IsSelectedTop    = false;
+		IsSelectedRight  = false;
+		IsSelectedBottom = false;
 	}
 
 	#endregion
