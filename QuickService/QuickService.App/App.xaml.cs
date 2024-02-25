@@ -67,7 +67,6 @@ public partial class App : Application
 			Ioc.Default.GetService<IGlobalMouseHookService	 >()!.UnHook();
 			Ioc.Default.GetService<IGlobalKeyboardHookService>()!.UnHook();
 		}
-
 	}
 
 	#endregion

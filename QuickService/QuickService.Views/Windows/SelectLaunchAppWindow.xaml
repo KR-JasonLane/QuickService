@@ -10,6 +10,7 @@
         Background="Transparent" 
         AllowsTransparency="True"
         Title="ToastWindow" 
+        ShowInTaskbar="False"
         Left="{Binding PositionLeft, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         Top="{Binding PositionTop, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         Height="{Binding WindowLength, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 

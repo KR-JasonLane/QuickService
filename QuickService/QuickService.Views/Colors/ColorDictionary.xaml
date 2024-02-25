@@ -12,6 +12,7 @@
     <!--               Foreground               -->
     <!--                                        -->
 
+    <SolidColorBrush x:Key="TitleFontForeground"    Color="WhiteSmoke"/>
     <SolidColorBrush x:Key="WindowButtonForeground" Color="WhiteSmoke"/>
     <SolidColorBrush x:Key="ForegroundMid"          Color="#003e23"   />
 

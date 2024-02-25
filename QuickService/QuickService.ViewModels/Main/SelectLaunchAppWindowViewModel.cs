@@ -1,12 +1,22 @@
 ﻿using QuickService.Abstract.Interfaces;
+using QuickService.Models.Configure;
 using QuickService.ViewModels.Messenger;
 
 namespace QuickService.ViewModels;
 
 public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IViewModel
 {
-	public SelectLaunchAppWindowViewModel()
+	public SelectLaunchAppWindowViewModel(IConfigurationService configurationService, ILaunchAppService launchAppService)
 	{
+		////////////////////////////////////////
+		// 서비스 등록
+		////////////////////////////////////////
+		{
+			_configurationService = configurationService;
+			_launchAppService     = launchAppService;
+		}
+
+
 		////////////////////////////////////////
 		// 메신저 등록
 		////////////////////////////////////////
@@ -23,6 +33,10 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 
 					_currentWindowCenter = new Point(m.Value.X, m.Value.Y);
 				}
+				else
+				{
+					LaunchSelectedApp();
+				}
 			});
 
 			WeakReferenceMessenger.Default.Register<ModifierKeyStateMessage>(this, (r, m) =>
@@ -36,6 +50,11 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 				if (IsWindowOpen) 
 					CalculateMousePoint(new Point(m.Value.X, m.Value.Y));
 			});
+
+			WeakReferenceMessenger.Default.Register<AppInformationChangedMessage>(this, (r, m) =>
+			{
+				LoadUserSelectedAppIconImages(m.Value);
+			});
 		}
 
 
@@ -45,10 +64,25 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 		{
 			WindowLength        = 300; //윈도우 크기
 			InvalidAreaDiameter = 52 ; //무효영역 크기
+
+			LoadUserSelectedAppIconImages(AppPosition.LEFT  );
+			LoadUserSelectedAppIconImages(AppPosition.TOP   );
+			LoadUserSelectedAppIconImages(AppPosition.RIGHT );
+			LoadUserSelectedAppIconImages(AppPosition.BOTTOM);
 		}
 	}
 
 	#region Properties
+
+	/// <summary>
+	/// 사용자 설정 서비스
+	/// </summary>
+	private IConfigurationService _configurationService;
+
+	/// <summary>
+	/// 어플리케이션 실행 서비스
+	/// </summary>
+	private ILaunchAppService _launchAppService;
 
 	/// <summary>
 	/// 좌측 앱 선택
@@ -225,6 +259,65 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 		IsSelectedTop    = false;
 		IsSelectedRight  = false;
 		IsSelectedBottom = false;
+	}
+
+	/// <summary>
+	/// 사용자가 선택한 어플리케이션의 아이콘을 이미지로 저장
+	/// </summary>
+	/// <param name="position"> 설정 하고자 하는 영역 </param>
+	private void LoadUserSelectedAppIconImages(AppPosition position)
+	{
+		var configuration = _configurationService.GetConfiguration<RegisteredApplicationModel>();
+
+		if(configuration != null)
+		{
+			switch(position)
+			{
+				case AppPosition.LEFT:
+					if(configuration.LeftAppInformation.IsValidPath())
+					{
+						LeftAppIconImageSource = configuration.LeftAppInformation.GetIconImage()!;
+					}
+				break;
+
+				case AppPosition.TOP:
+					if(configuration.TopAppInformation.IsValidPath())
+					{
+						TopAppIconImageSource = configuration.TopAppInformation.GetIconImage()!;
+					}
+				break;
+
+				case AppPosition.RIGHT:
+					if(configuration.RightAppInformation.IsValidPath())
+					{
+						RightAppIconImageSource = configuration.RightAppInformation.GetIconImage()!;
+					}
+				break;
+
+				case AppPosition.BOTTOM:
+					if(configuration.BottomAppInformation.IsValidPath())
+					{
+						BottomAppIconImageSource = configuration.BottomAppInformation.GetIconImage()!;
+					}
+				break;
+			}
+		}
+	}
+
+	/// <summary>
+	/// 선택된 영역의 프로그램을 실행
+	/// </summary>
+	private void LaunchSelectedApp()
+	{
+		var configuration = _configurationService.GetConfiguration<RegisteredApplicationModel>();
+
+        if (configuration != null)
+        {
+			if      (IsSelectedLeft  ) _launchAppService.LaunchApp(configuration.LeftAppInformation.AppPath!  );
+			else if (IsSelectedTop   ) _launchAppService.LaunchApp(configuration.TopAppInformation.AppPath!   );
+			else if (IsSelectedRight ) _launchAppService.LaunchApp(configuration.RightAppInformation.AppPath! );
+			else if (IsSelectedBottom) _launchAppService.LaunchApp(configuration.BottomAppInformation.AppPath!);
+		}        
 	}
 
 	#endregion

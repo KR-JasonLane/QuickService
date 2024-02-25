@@ -8,6 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:QuickService.Views"
              Background="{StaticResource BackgroundBrushMid}"
+             FontFamily="Roboto"
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="400">
 
@@ -25,6 +26,12 @@
         <Image Source="/QuickService.App;component/Resources/Title/QuickServiceLogo.png"
                Margin="5"
                HorizontalAlignment="Left"/>
+
+        <TextBlock Text="Quick Service"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Foreground="{StaticResource TitleFontForeground}"
+                   FontSize="20"/>
 
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
