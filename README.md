@@ -71,6 +71,10 @@
 - 마우스 좌측버튼 Up 시 선택된 영역의 프로그램 실행.
 - None Select 영역에서 마우스 좌측버튼 Up / 조합키 Up 시 선택창 닫힘.
 
+## **💾다운로드**
+
+### [QuickService.zip](https://drive.google.com/file/d/1UgUS9h4n9krf0O9_7zet-yojzG36eQ-s/view?usp=sharing)
+
 <br/>
 <br/>
 <br/>
