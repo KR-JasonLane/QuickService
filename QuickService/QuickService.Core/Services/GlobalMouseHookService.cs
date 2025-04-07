@@ -2,7 +2,7 @@
 using QuickService.ViewModels.Messenger;
 using QuickService.ViewModels.Messenger.Parameters;
 
-namespace QuickService.Domain.Services;
+namespace QuickService.Core.Services;
 
 public class GlobalMouseHookService : IGlobalMouseHookService
 {

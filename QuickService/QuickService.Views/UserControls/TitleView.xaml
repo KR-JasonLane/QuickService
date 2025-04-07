@@ -41,7 +41,8 @@
             <Button Width="30" Height="30"
                     Margin="5"
                     Style="{StaticResource MaterialDesignIconButton}" 
-                    Cursor="Hand">
+                    Cursor="Hand"
+                    Command="{Binding ShowOptionDialogCommand}">
 
                 <md:PackIcon Kind="CogOutline"
                              VerticalAlignment="Center"  

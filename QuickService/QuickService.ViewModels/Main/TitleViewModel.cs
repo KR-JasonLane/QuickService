@@ -3,7 +3,7 @@
 namespace QuickService.ViewModels;
 public partial class TitleViewModel : ObservableRecipient, IViewModel
 {
-    public TitleViewModel(ITrayIconService trayIconService, IHideMainWindowService hideMainWindowService)
+    public TitleViewModel(ITrayIconService trayIconService, IHideMainWindowService hideMainWindowService, IDialogHostService dialogHostService)
     {
         ////////////////////////////////////////
         // 서비스 등록
@@ -11,7 +11,8 @@ public partial class TitleViewModel : ObservableRecipient, IViewModel
         {
             _trayIconService        = trayIconService;
             _hideMainWindowService  = hideMainWindowService;
-        }
+			_dialogHostService      = dialogHostService;
+		}
     }
 
     #region Properties
@@ -26,14 +27,19 @@ public partial class TitleViewModel : ObservableRecipient, IViewModel
     /// </summary>
     private readonly IHideMainWindowService _hideMainWindowService;
 
-    #endregion
+	/// <summary>
+	/// 다이얼로그 호스트 서비스
+	/// </summary>
+	private readonly IDialogHostService _dialogHostService;
 
-    #region Commands
+	#endregion
 
-    /// <summary>
-    /// 프로세스 종료 커맨드
-    /// </summary>
-    [RelayCommand]
+	#region Commands
+
+	/// <summary>
+	/// 프로세스 종료 커맨드
+	/// </summary>
+	[RelayCommand]
     private void KillProcess() => Application.Current.Shutdown();
 
     /// <summary>
@@ -45,6 +51,15 @@ public partial class TitleViewModel : ObservableRecipient, IViewModel
         _hideMainWindowService.HideMainWindow();
         _trayIconService.VisibleTrayIconOnTaskBar(true);
 	}
+
+    /// <summary>
+    /// 옵션 다이얼로그 표시
+    /// </summary>
+    [RelayCommand]
+    private void ShowOptionDialog()
+    {
+        _dialogHostService.ShowConfigDialog("ShellWindowHost");
+    }
 
 	#endregion
 

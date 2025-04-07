@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuickService.Views"
-        xmlns:cvt="clr-namespace:QuickService.Domain.Converters;assembly=QuickService.Domain"
+        xmlns:cvt="clr-namespace:QuickService.Core.Converters;assembly=QuickService.Core"
         mc:Ignorable="d"
         WindowStyle="None" 
         Background="Transparent" 

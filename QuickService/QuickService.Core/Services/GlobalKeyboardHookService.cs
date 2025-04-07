@@ -1,7 +1,7 @@
 ﻿using QuickService.Abstract.Interfaces;
 using QuickService.ViewModels.Messenger;
 
-namespace QuickService.Domain.Services;
+namespace QuickService.Core.Services;
 
 public class GlobalKeyboardHookService : IGlobalKeyboardHookService
 {

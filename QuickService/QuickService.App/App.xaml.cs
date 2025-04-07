@@ -28,7 +28,7 @@ public partial class App : Application
 		// Global Hook
 		////////////////////////////////////////
 		{
-			Ioc.Default.GetService<IGlobalMouseHookService	 >()!.SetHook();
+			Ioc.Default.GetService<IGlobalMouseHookService   >()!.SetHook();
 			Ioc.Default.GetService<IGlobalKeyboardHookService>()!.SetHook();
 		}
 

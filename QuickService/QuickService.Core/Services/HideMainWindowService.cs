@@ -1,6 +1,6 @@
 ﻿using QuickService.Abstract.Interfaces;
 
-namespace QuickService.Domain.Services;
+namespace QuickService.Core.Services;
 
 public class HideMainWindowService : IHideMainWindowService
 {

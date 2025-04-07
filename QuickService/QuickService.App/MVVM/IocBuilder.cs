@@ -1,5 +1,5 @@
 ﻿using QuickService.Abstract.Interfaces;
-using QuickService.Domain.Services;
+using QuickService.Core.Services;
 using QuickService.ViewModels;
 
 namespace QuickService.App;
@@ -37,6 +37,7 @@ public static class IocBuilder
 			services.AddSingleton<IGlobalMouseHookService    , GlobalMouseHookService    >();
 			services.AddSingleton<IGlobalKeyboardHookService , GlobalKeyboardHookService >();
 			services.AddSingleton<ILaunchAppService          , LaunchAppService          >();
+			services.AddSingleton<IDialogHostService         , DialogHostService         >();
 		}
 
 
