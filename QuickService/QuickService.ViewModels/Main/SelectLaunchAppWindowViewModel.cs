@@ -32,6 +32,8 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 					PositionTop  = m.Value.Y - (WindowLength / 2);
 
 					_currentWindowCenter = new Point(m.Value.X, m.Value.Y);
+
+					CalculateMousePoint(_currentWindowCenter);
 				}
 				else
 				{
