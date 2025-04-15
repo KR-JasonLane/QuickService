@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QuickService.Core\QuickService.Core.csproj" />
+    <ProjectReference Include="..\QuickService.Util\QuickService.Util.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace QuickService.Core.Converters;
+﻿namespace QuickService.Util.Converters;
 
 public class BooleanToVisibilityReverseConverter : IValueConverter
 {

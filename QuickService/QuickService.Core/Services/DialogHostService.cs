@@ -1,4 +1,6 @@
 ﻿using QuickService.Abstract.Interfaces;
+using QuickService.ViewModels.Main;
+using QuickService.Views.UserControls;
 
 namespace QuickService.Core.Services;
 
@@ -15,6 +17,13 @@ public class DialogHostService : IDialogHostService
 	/// <returns> Ok = true / Cancel = false </returns>
 	public bool ShowConfigDialog(string dialogHostName, string message = "")
 	{
-		return true;
+		//다이얼로그 뷰 생성
+		object? configDialogView = new ConfigDialogView() { DataContext = new ConfigDialogViewModel() };
+
+		//다이얼로그 띄우기
+		object? result = DialogHost.Show(configDialogView, dialogHostName);
+
+		//결과 반환
+		return result is true;
 	}
 }
