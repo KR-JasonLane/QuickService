@@ -18,21 +18,6 @@ public class RegisteredApplicationModelTests
     }
 
     [Fact]
-    public void SetLeftApp_PathIsStored()
-    {
-        // Arrange
-        var model = new RegisteredApplicationModel();
-
-        // Act
-        model.LeftAppInformation.AppPath = @"C:\test\app.exe";
-
-        // Assert - AppPath getter는 내부에서 _appPath를 반환
-        // 파일이 존재하지 않으면 setter가 값을 설정하지 않음 (SetInformationPropertyFromPath)
-        // 이 동작은 현재 AppInformationModel의 구현 특성
-        true.Should().BeTrue(); // 현재 setter는 File.Exists 체크하므로 가짜 경로는 저장되지 않음
-    }
-
-    [Fact]
     public void AllPositions_AreIndependent()
     {
         // Arrange
@@ -46,6 +31,42 @@ public class RegisteredApplicationModelTests
         model.TopAppInformation.Should().NotBeSameAs(model.BottomAppInformation);
         model.RightAppInformation.Should().NotBeSameAs(model.BottomAppInformation);
     }
+
+    [Fact]
+    public void GetByPosition_Left_ReturnsLeftAppInformation()
+    {
+        var model = new RegisteredApplicationModel();
+        model.GetByPosition(AppPosition.Left).Should().BeSameAs(model.LeftAppInformation);
+    }
+
+    [Fact]
+    public void GetByPosition_Top_ReturnsTopAppInformation()
+    {
+        var model = new RegisteredApplicationModel();
+        model.GetByPosition(AppPosition.Top).Should().BeSameAs(model.TopAppInformation);
+    }
+
+    [Fact]
+    public void GetByPosition_Right_ReturnsRightAppInformation()
+    {
+        var model = new RegisteredApplicationModel();
+        model.GetByPosition(AppPosition.Right).Should().BeSameAs(model.RightAppInformation);
+    }
+
+    [Fact]
+    public void GetByPosition_Bottom_ReturnsBottomAppInformation()
+    {
+        var model = new RegisteredApplicationModel();
+        model.GetByPosition(AppPosition.Bottom).Should().BeSameAs(model.BottomAppInformation);
+    }
+
+    [Fact]
+    public void GetByPosition_Invalid_ThrowsArgumentOutOfRange()
+    {
+        var model = new RegisteredApplicationModel();
+        var act = () => model.GetByPosition((AppPosition)999);
+        act.Should().Throw<ArgumentOutOfRangeException>();
+    }
 }
 
 public class ConfigureModelTests
@@ -53,20 +74,14 @@ public class ConfigureModelTests
     [Fact]
     public void Constructor_Default_HasRegisteredApplication()
     {
-        // Act
         var model = new ConfigureModel();
-
-        // Assert
         model.RegisteredApplication.Should().NotBeNull();
     }
 
     [Fact]
     public void RegisteredApplication_Default_HasAllPositions()
     {
-        // Act
         var model = new ConfigureModel();
-
-        // Assert
         model.RegisteredApplication.LeftAppInformation.Should().NotBeNull();
         model.RegisteredApplication.TopAppInformation.Should().NotBeNull();
         model.RegisteredApplication.RightAppInformation.Should().NotBeNull();
@@ -79,66 +94,66 @@ public class AppInformationModelTests
     [Fact]
     public void NewModel_AppPath_IsNull()
     {
-        // Act
         var model = new AppInformationModel();
-
-        // Assert
         model.AppPath.Should().BeNull();
     }
 
     [Fact]
-    public void IsValidPath_NullPath_ReturnsFalse()
+    public void HasValidPath_NullPath_ReturnsFalse()
     {
-        // Arrange
         var model = new AppInformationModel();
-
-        // Act & Assert
-        model.IsValidPath().Should().BeFalse();
+        model.HasValidPath().Should().BeFalse();
     }
 
     [Fact]
-    public void IsValidPath_NonExistentPath_ReturnsFalse()
+    public void HasValidPath_EmptyPath_ReturnsFalse()
     {
-        // Arrange
-        var model = new AppInformationModel();
-        // AppPath setter는 File.Exists를 확인하므로, 존재하지 않는 경로는 설정되지 않음
-        // 직접 IsValidPath를 호출하면 AppPath가 null이므로 false
-
-        // Act & Assert
-        model.IsValidPath().Should().BeFalse();
+        var model = new AppInformationModel { AppPath = "" };
+        model.HasValidPath().Should().BeFalse();
     }
 
     [Fact]
-    public void GetIconImage_NewModel_ReturnsNull()
+    public void HasValidPath_NonExistentPath_ReturnsFalse()
     {
-        // Arrange
-        var model = new AppInformationModel();
-
-        // Act & Assert
-        model.GetIconImage().Should().BeNull();
+        var model = new AppInformationModel { AppPath = @"C:\nonexistent\fake.exe" };
+        model.HasValidPath().Should().BeFalse();
     }
 
     [Fact]
-    public void GetAppName_NewModel_ReturnsNull()
+    public void IconImage_NewModel_ReturnsNull()
     {
-        // Arrange
         var model = new AppInformationModel();
-
-        // Act & Assert
-        model.GetAppName().Should().BeNull();
+        model.IconImage.Should().BeNull();
     }
 
     [Fact]
-    public void AppPath_SetNonExistentFile_DoesNotUpdatePath()
+    public void DisplayName_NewModel_ReturnsNull()
     {
-        // Arrange
+        var model = new AppInformationModel();
+        model.DisplayName.Should().BeNull();
+    }
+
+    [Fact]
+    public void LoadInfoFromPath_InvalidPath_DoesNothing()
+    {
+        var model = new AppInformationModel { AppPath = @"C:\nonexistent\fake.exe" };
+
+        model.LoadInfoFromPath();
+
+        model.IconImage.Should().BeNull();
+        model.DisplayName.Should().BeNull();
+    }
+
+    [Fact]
+    public void AppPath_Setter_NoSideEffects()
+    {
+        // setter가 더 이상 부수효과를 발생시키지 않음을 확인
         var model = new AppInformationModel();
 
-        // Act - File.Exists가 false이므로 setter 내부에서 경로를 설정하지 않음
         model.AppPath = @"C:\nonexistent\fake.exe";
 
-        // Assert - setter에서 File.Exists 검사 실패 → _appPath가 변경되지 않음
-        model.GetIconImage().Should().BeNull();
-        model.GetAppName().Should().BeNull();
+        model.AppPath.Should().Be(@"C:\nonexistent\fake.exe");
+        model.IconImage.Should().BeNull();
+        model.DisplayName.Should().BeNull();
     }
 }

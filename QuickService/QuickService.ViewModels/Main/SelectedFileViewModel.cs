@@ -31,10 +31,10 @@ public partial class SelectedFileViewModel : ObservableRecipient, IViewModel
 		// 사용자 설정 로드
 		////////////////////////////////////////
 		{
-            LoadUserSelectedAppIconImages(AppPosition.LEFT	);
-			LoadUserSelectedAppIconImages(AppPosition.RIGHT	);
-			LoadUserSelectedAppIconImages(AppPosition.TOP	);
-			LoadUserSelectedAppIconImages(AppPosition.BOTTOM);
+            LoadUserSelectedAppIconImages(AppPosition.Left	);
+			LoadUserSelectedAppIconImages(AppPosition.Right	);
+			LoadUserSelectedAppIconImages(AppPosition.Top	);
+			LoadUserSelectedAppIconImages(AppPosition.Bottom);
 		}
 	}
 
@@ -105,68 +105,35 @@ public partial class SelectedFileViewModel : ObservableRecipient, IViewModel
     {
         var configuration = _configurationService.GetConfiguration<RegisteredApplicationModel>();
 
-        if(configuration != null)
+        if(configuration is null)
+			throw new InvalidOperationException("Error : 사용자 설정 불러오기 실패!");
+
+		var appInfo = configuration.GetByPosition(position);
+
+		if (appInfo.HasValidPath())
 		{
-			switch (position)
-			{
-				case AppPosition.LEFT:
-					if (configuration.LeftAppInformation.IsValidPath())
-					{
-						LeftAppIconImageSource = configuration.LeftAppInformation.GetIconImage()!;
-						LeftAppName			   = configuration.LeftAppInformation.GetAppName  ()!;
-					}
-					else
-					{
-						LeftAppIconImageSource = Properties.Resources.EmptyIcon.ToImageSource ()!;
-						LeftAppName			   = "Empty";
-					}
-				break;
-
-				case AppPosition.TOP:
-					if(configuration.TopAppInformation.IsValidPath())
-					{
-						TopAppIconImageSource = configuration.TopAppInformation.GetIconImage()!;
-						TopAppName			  = configuration.TopAppInformation.GetAppName  ()!;
-					}
-					else
-					{
-						TopAppIconImageSource = Properties.Resources.EmptyIcon.ToImageSource()!;
-						TopAppName			  = "Empty";
-					}
-				break; 
-
-				case AppPosition.RIGHT:
-					if (configuration.RightAppInformation.IsValidPath())
-					{
-						RightAppIconImageSource = configuration.RightAppInformation.GetIconImage()!;
-						RightAppName			= configuration.RightAppInformation.GetAppName  ()!;
-					}
-					else
-					{
-						RightAppIconImageSource = Properties.Resources.EmptyIcon.ToImageSource  ()!;
-						RightAppName			= "Empty";
-					}
-				break;
-
-				case AppPosition.BOTTOM:
-					if (configuration.BottomAppInformation.IsValidPath())
-					{
-						BottomAppIconImageSource = configuration.BottomAppInformation.GetIconImage()!;
-						BottomAppName			 = configuration.BottomAppInformation.GetAppName  ()!;
-					}
-					else
-					{
-						BottomAppIconImageSource = Properties.Resources.EmptyIcon.ToImageSource   ()!;
-						BottomAppName			 = "Empty";
-					}
-				break;
-			}
+			appInfo.LoadInfoFromPath();
+			ApplyAppDisplay(position, appInfo.IconImage!, appInfo.DisplayName!);
 		}
 		else
 		{
-			throw new InvalidOperationException("Error : 사용자 설정 불러오기 실패! ");
+			ApplyAppDisplay(position, Properties.Resources.EmptyIcon.ToImageSource()!, "Empty");
 		}
     }
+
+	/// <summary>
+	/// 위치에 해당하는 앱 표시 정보를 적용
+	/// </summary>
+	private void ApplyAppDisplay(AppPosition position, ImageSource icon, string name)
+	{
+		switch (position)
+		{
+			case AppPosition.Left:   LeftAppIconImageSource   = icon; LeftAppName   = name; break;
+			case AppPosition.Top:    TopAppIconImageSource    = icon; TopAppName    = name; break;
+			case AppPosition.Right:  RightAppIconImageSource  = icon; RightAppName  = name; break;
+			case AppPosition.Bottom: BottomAppIconImageSource = icon; BottomAppName = name; break;
+		}
+	}
 
     #endregion
 }

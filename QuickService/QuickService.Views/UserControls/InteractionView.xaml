@@ -47,7 +47,7 @@
             </Button>
 
             <TextBlock x:Name="LeftApplicationButtonText"
-                       Text="LEFT" 
+                       Text="Left"
                        TextAlignment="Center" 
                        FontWeight="Bold" 
                        Foreground="{StaticResource ForegroundMid}"/>
@@ -81,7 +81,7 @@
             </Button>
 
             <TextBlock x:Name="TopApplicationButtonText"
-                       Text="TOP" 
+                       Text="Top"
                        TextAlignment="Center" 
                        FontWeight="Bold" 
                        Foreground="{StaticResource ForegroundMid}"/>
@@ -115,7 +115,7 @@
             </Button>
 
             <TextBlock x:Name="RightApplicationButtonText"
-                       Text="RIGHT" 
+                       Text="Right"
                        TextAlignment="Center" 
                        FontWeight="Bold" 
                        Foreground="{StaticResource ForegroundMid}"/>
@@ -150,7 +150,7 @@
             </Button>
 
             <TextBlock x:Name="BottomApplicationButtonText"
-                       Text="BOTTOM" 
+                       Text="Bottom" 
                        TextAlignment="Center" 
                        FontWeight="Bold"
                        Foreground="{StaticResource ForegroundMid}"/>

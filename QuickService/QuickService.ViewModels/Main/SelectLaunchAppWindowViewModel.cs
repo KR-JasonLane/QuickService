@@ -67,10 +67,10 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 			WindowLength        = 300; //윈도우 크기
 			InvalidAreaDiameter = 52 ; //무효영역 크기
 
-			LoadUserSelectedAppIconImages(AppPosition.LEFT  );
-			LoadUserSelectedAppIconImages(AppPosition.TOP   );
-			LoadUserSelectedAppIconImages(AppPosition.RIGHT );
-			LoadUserSelectedAppIconImages(AppPosition.BOTTOM);
+			LoadUserSelectedAppIconImages(AppPosition.Left  );
+			LoadUserSelectedAppIconImages(AppPosition.Top   );
+			LoadUserSelectedAppIconImages(AppPosition.Right );
+			LoadUserSelectedAppIconImages(AppPosition.Bottom);
 		}
 	}
 
@@ -134,25 +134,25 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 	/// 좌측 앱 아이콘 이미지
 	/// </summary>
 	[ObservableProperty]
-	private ImageSource _leftAppIconImageSource;
+	private ImageSource? _leftAppIconImageSource;
 
 	/// <summary>
 	/// 상단 앱 아이콘 이미지
 	/// </summary>
 	[ObservableProperty]
-	private ImageSource _topAppIconImageSource;
+	private ImageSource? _topAppIconImageSource;
 
 	/// <summary>
 	/// 우측 앱 아이콘 이미지
 	/// </summary>
 	[ObservableProperty]
-	private ImageSource _rightAppIconImageSource;
+	private ImageSource? _rightAppIconImageSource;
 
 	/// <summary>
 	/// 하단 앱 아이콘 이미지
 	/// </summary>
 	[ObservableProperty]
-	private ImageSource _bottomAppIconImageSource;
+	private ImageSource? _bottomAppIconImageSource;
 
 	/// <summary>
 	/// 윈도우의 Left좌표
@@ -270,39 +270,19 @@ public partial class SelectLaunchAppWindowViewModel : ObservableRecipient, IView
 	private void LoadUserSelectedAppIconImages(AppPosition position)
 	{
 		var configuration = _configurationService.GetConfiguration<RegisteredApplicationModel>();
+		if (configuration is null) return;
 
-		if(configuration != null)
+		var appInfo = configuration.GetByPosition(position);
+		if (!appInfo.HasValidPath()) return;
+
+		appInfo.LoadInfoFromPath();
+
+		switch (position)
 		{
-			switch(position)
-			{
-				case AppPosition.LEFT:
-					if(configuration.LeftAppInformation.IsValidPath())
-					{
-						LeftAppIconImageSource = configuration.LeftAppInformation.GetIconImage()!;
-					}
-				break;
-
-				case AppPosition.TOP:
-					if(configuration.TopAppInformation.IsValidPath())
-					{
-						TopAppIconImageSource = configuration.TopAppInformation.GetIconImage()!;
-					}
-				break;
-
-				case AppPosition.RIGHT:
-					if(configuration.RightAppInformation.IsValidPath())
-					{
-						RightAppIconImageSource = configuration.RightAppInformation.GetIconImage()!;
-					}
-				break;
-
-				case AppPosition.BOTTOM:
-					if(configuration.BottomAppInformation.IsValidPath())
-					{
-						BottomAppIconImageSource = configuration.BottomAppInformation.GetIconImage()!;
-					}
-				break;
-			}
+			case AppPosition.Left:   LeftAppIconImageSource   = appInfo.IconImage!; break;
+			case AppPosition.Top:    TopAppIconImageSource    = appInfo.IconImage!; break;
+			case AppPosition.Right:  RightAppIconImageSource  = appInfo.IconImage!; break;
+			case AppPosition.Bottom: BottomAppIconImageSource = appInfo.IconImage!; break;
 		}
 	}
 

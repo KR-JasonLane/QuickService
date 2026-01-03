@@ -50,38 +50,20 @@ public partial class InteractionViewModel : ObservableRecipient, IViewModel
     /// <summary>
     /// 사용자가 선택한 어플리케이션을 기억
     /// </summary>
-    /// <param name="param"> LEFT, TOP, RIGHT, BOTTOM 파라미터 </param>
+    /// <param name="param"> Left, Top, Right, Bottom 파라미터 </param>
     [RelayCommand]
     private void RegistrationQuickServiceApplication(string param)
     {
-        var configuration       = _configurationService.GetConfiguration<RegisteredApplicationModel>();
         string userSelectedPath = _userSelectPathService.GetUserSelectedFilePath();
+        if (string.IsNullOrEmpty(userSelectedPath)) return;
 
-        if(userSelectedPath != null)
-		{
-			switch (param)
-			{
-				case "LEFT"  : configuration.LeftAppInformation.AppPath   = userSelectedPath; break;
-				case "TOP"   : configuration.TopAppInformation.AppPath    = userSelectedPath; break;
-				case "RIGHT" : configuration.RightAppInformation.AppPath  = userSelectedPath; break;
-				case "BOTTOM": configuration.BottomAppInformation.AppPath = userSelectedPath; break;
-			}
+        var position = Enum.Parse<AppPosition>(param, ignoreCase: true);
+        var configuration = _configurationService.GetConfiguration<RegisteredApplicationModel>();
 
-            _configurationService.SaveConfiguration(configuration);
+        configuration.GetByPosition(position).AppPath = userSelectedPath;
+        _configurationService.SaveConfiguration(configuration);
 
-            var positions = Enum.GetNames(typeof(AppPosition)).ToList();
-            int positionIndex = 0;
-
-            foreach (var position in positions)
-            {
-                if(position.Equals(param))
-                {
-					WeakReferenceMessenger.Default.Send(new AppInformationChangedMessage((AppPosition)positionIndex));
-                    break;
-				}
-				positionIndex++;
-			}            
-		}        
+        WeakReferenceMessenger.Default.Send(new AppInformationChangedMessage(position));
     }
 
     #endregion
