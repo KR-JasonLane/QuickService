@@ -25,32 +25,31 @@ public class JsonFileServiceTests : IDisposable
         return Path.Combine(_testDirectory, fileName);
     }
 
-    #region SaveJsonProperties Tests
+    #region Save Tests
 
     [Fact]
-    public void SaveJsonProperties_ValidObject_CreatesFile()
+    public void Save_ValidObject_CreatesFile()
     {
         // Arrange
         var path = GetTestFilePath();
         var obj = new TestModel { Name = "Test", Value = 42 };
 
         // Act
-        var result = _sut.SaveJsonProperties(obj, path);
+        _sut.Save(obj, path);
 
         // Assert
-        result.Should().BeTrue();
         File.Exists(path).Should().BeTrue();
     }
 
     [Fact]
-    public void SaveJsonProperties_ValidObject_SerializesCorrectly()
+    public void Save_ValidObject_SerializesCorrectly()
     {
         // Arrange
         var path = GetTestFilePath();
         var obj = new TestModel { Name = "Hello", Value = 99 };
 
         // Act
-        _sut.SaveJsonProperties(obj, path);
+        _sut.Save(obj, path);
 
         // Assert
         var json = File.ReadAllText(path);
@@ -59,47 +58,47 @@ public class JsonFileServiceTests : IDisposable
     }
 
     [Fact]
-    public void SaveJsonProperties_DirectoryNotExists_CreatesDirectory()
+    public void Save_DirectoryNotExists_CreatesDirectory()
     {
         // Arrange
         var path = Path.Combine(_testDirectory, "sub", "deep", "test.json");
         var obj = new TestModel { Name = "Test", Value = 1 };
 
         // Act
-        _sut.SaveJsonProperties(obj, path);
+        _sut.Save(obj, path);
 
         // Assert
         File.Exists(path).Should().BeTrue();
     }
 
     [Fact]
-    public void SaveJsonProperties_NullPath_ThrowsException()
+    public void Save_NullPath_ThrowsArgumentException()
     {
         // Arrange
         var obj = new TestModel { Name = "Test", Value = 1 };
 
         // Act
-        var act = () => _sut.SaveJsonProperties(obj, null!);
+        var act = () => _sut.Save(obj, null!);
 
         // Assert
-        act.Should().Throw<Exception>();
+        act.Should().Throw<ArgumentException>();
     }
 
     [Fact]
-    public void SaveJsonProperties_EmptyPath_ThrowsException()
+    public void Save_EmptyPath_ThrowsArgumentException()
     {
         // Arrange
         var obj = new TestModel { Name = "Test", Value = 1 };
 
         // Act
-        var act = () => _sut.SaveJsonProperties(obj, string.Empty);
+        var act = () => _sut.Save(obj, string.Empty);
 
         // Assert
-        act.Should().Throw<Exception>();
+        act.Should().Throw<ArgumentException>();
     }
 
     [Fact]
-    public void SaveJsonProperties_OverwritesExistingFile()
+    public void Save_OverwritesExistingFile()
     {
         // Arrange
         var path = GetTestFilePath();
@@ -107,8 +106,8 @@ public class JsonFileServiceTests : IDisposable
         var updated = new TestModel { Name = "Updated", Value = 2 };
 
         // Act
-        _sut.SaveJsonProperties(original, path);
-        _sut.SaveJsonProperties(updated, path);
+        _sut.Save(original, path);
+        _sut.Save(updated, path);
 
         // Assert
         var json = File.ReadAllText(path);
@@ -118,18 +117,18 @@ public class JsonFileServiceTests : IDisposable
 
     #endregion
 
-    #region GetJsonProperties Tests
+    #region Load Tests
 
     [Fact]
-    public void GetJsonProperties_ExistingFile_DeserializesCorrectly()
+    public void Load_ExistingFile_DeserializesCorrectly()
     {
         // Arrange
         var path = GetTestFilePath();
         var original = new TestModel { Name = "Saved", Value = 77 };
-        _sut.SaveJsonProperties(original, path);
+        _sut.Save(original, path);
 
         // Act
-        var loaded = _sut.GetJsonProperties<TestModel>(path);
+        var loaded = _sut.Load<TestModel>(path);
 
         // Assert
         loaded.Name.Should().Be("Saved");
@@ -137,13 +136,13 @@ public class JsonFileServiceTests : IDisposable
     }
 
     [Fact]
-    public void GetJsonProperties_NonExistentFile_CreatesDefaultAndSaves()
+    public void Load_NonExistentFile_CreatesDefaultAndSaves()
     {
         // Arrange
         var path = GetTestFilePath();
 
         // Act
-        var result = _sut.GetJsonProperties<TestModel>(path);
+        var result = _sut.Load<TestModel>(path);
 
         // Assert
         result.Should().NotBeNull();
@@ -153,7 +152,7 @@ public class JsonFileServiceTests : IDisposable
     }
 
     [Fact]
-    public void GetJsonProperties_CorruptedFile_ThrowsJsonException()
+    public void Load_CorruptedFile_ThrowsJsonException()
     {
         // Arrange
         var path = GetTestFilePath();
@@ -161,9 +160,9 @@ public class JsonFileServiceTests : IDisposable
         File.WriteAllText(path, "NOT VALID JSON {{{");
 
         // Act
-        var act = () => _sut.GetJsonProperties<TestModel>(path);
+        var act = () => _sut.Load<TestModel>(path);
 
-        // Assert - 현재 구현은 corrupted JSON에 대해 예외를 던짐
+        // Assert
         act.Should().Throw<Newtonsoft.Json.JsonReaderException>();
     }
 
@@ -175,8 +174,8 @@ public class JsonFileServiceTests : IDisposable
         var original = new TestModel { Name = "RoundTrip", Value = 123 };
 
         // Act
-        _sut.SaveJsonProperties(original, path);
-        var loaded = _sut.GetJsonProperties<TestModel>(path);
+        _sut.Save(original, path);
+        var loaded = _sut.Load<TestModel>(path);
 
         // Assert
         loaded.Name.Should().Be(original.Name);
@@ -195,8 +194,8 @@ public class JsonFileServiceTests : IDisposable
         };
 
         // Act
-        _sut.SaveJsonProperties(original, path);
-        var loaded = _sut.GetJsonProperties<TestModelWithNested>(path);
+        _sut.Save(original, path);
+        var loaded = _sut.Load<TestModelWithNested>(path);
 
         // Assert
         loaded.Title.Should().Be("Parent");
@@ -213,8 +212,8 @@ public class JsonFileServiceTests : IDisposable
         var original = new TestModel();
 
         // Act
-        _sut.SaveJsonProperties(original, path);
-        var loaded = _sut.GetJsonProperties<TestModel>(path);
+        _sut.Save(original, path);
+        var loaded = _sut.Load<TestModel>(path);
 
         // Assert
         loaded.Name.Should().BeNull();

@@ -1,4 +1,5 @@
 ﻿using QuickService.Abstract.Interfaces;
+using QuickService.ViewModels.Main;
 
 namespace QuickService.ViewModels;
 public partial class TitleViewModel : ObservableRecipient, IViewModel
@@ -58,7 +59,8 @@ public partial class TitleViewModel : ObservableRecipient, IViewModel
     [RelayCommand]
     private void ShowOptionDialog()
     {
-        _dialogHostService.ShowConfigDialog("ShellWindowHost");
+        var content = new ConfigDialogViewModel();
+        _dialogHostService.ShowDialog("ShellWindowHost", content);
     }
 
 	#endregion

@@ -1,81 +1,59 @@
-﻿using QuickService.Abstract.Interfaces;
+using QuickService.Abstract.Interfaces;
 
 namespace QuickService.Core.Services;
 
 public class JsonFileService : IJsonFileService
 {
-
 	/// <summary>
-	/// 폴더경로와 파일경로가 유효한지 확인하고 유효하지 않으면 기본값으로 생성
+	/// 객체를 JSON 파일로 저장
 	/// </summary>
-	/// <returns> 결과 반환 </returns>
-	public bool SaveJsonProperties<T>(T jsonObject, string jsonPath)
+	public void Save<T>(T obj, string path)
 	{
-		string directoryPath = Path.GetDirectoryName(jsonPath)!;
-
-		////////////////////////////////////////
-		// 폴더경로, 파일경로 입력검사
-		////////////////////////////////////////
-		{
-			if (string.IsNullOrEmpty(directoryPath) || string.IsNullOrEmpty(jsonPath))
-			{
-				throw new Exception($"Error : Invalid path.");
-			}
-		}
-
-
-		////////////////////////////////////////
-		// 폴더 생성 시도
-		////////////////////////////////////////
-		{
-			try					{ Directory.CreateDirectory(directoryPath); }
-			catch (Exception e) { throw new Exception(e.Message);			}
-		}
-
-
-		////////////////////////////////////////
-		// 파일 생성 시도
-		////////////////////////////////////////
-		{
-			string convertedJsonText = JsonConvert.SerializeObject(jsonObject, Formatting.None);
-
-			try					{ File.WriteAllText(jsonPath, convertedJsonText);  }
-			catch (Exception e) { throw new Exception(e.Message);						}
-		}
-
-
-		////////////////////////////////////////
-		// 결과반환
-		////////////////////////////////////////
-		{
-			return File.Exists(jsonPath);
-		}
+		ValidatePath(path);
+		EnsureDirectoryExists(path);
+		WriteJson(obj, path);
 	}
 
 	/// <summary>
-	/// Json파일 파싱
+	/// JSON 파일을 객체로 로드
 	/// </summary>
-	/// <returns> Json 파싱데이터 </returns>
-	public T GetJsonProperties<T>(string jsonPath) where T : new()
+	public T Load<T>(string path) where T : new()
 	{
-		if (File.Exists(jsonPath) == false)
-		{
-			T result = new();
-			SaveJsonProperties(result, jsonPath);
+		if (!File.Exists(path))
+			return CreateAndSaveDefault<T>(path);
 
-			return result;
-		}
-		else
-		{
-			T? result = JsonConvert.DeserializeObject<T>(File.ReadAllText(jsonPath));
+		return DeserializeOrDefault<T>(path);
+	}
 
-			if (result == null)
-			{
-				result = new();
-				SaveJsonProperties(result, jsonPath);
-			}
+	private static void ValidatePath(string path)
+	{
+		if (string.IsNullOrEmpty(path))
+			throw new ArgumentException("파일 경로는 null이거나 빈 문자열일 수 없습니다.", nameof(path));
+	}
 
-			return result;
-		}
+	private static void EnsureDirectoryExists(string filePath)
+	{
+		var dir = Path.GetDirectoryName(filePath);
+		if (!string.IsNullOrEmpty(dir))
+			Directory.CreateDirectory(dir);
+	}
+
+	private static void WriteJson<T>(T obj, string path)
+	{
+		var json = JsonConvert.SerializeObject(obj, Formatting.None);
+		File.WriteAllText(path, json);
+	}
+
+	private T CreateAndSaveDefault<T>(string path) where T : new()
+	{
+		var result = new T();
+		Save(result, path);
+		return result;
+	}
+
+	private T DeserializeOrDefault<T>(string path) where T : new()
+	{
+		var json = File.ReadAllText(path);
+		return JsonConvert.DeserializeObject<T>(json) ?? CreateAndSaveDefault<T>(path);
 	}
 }

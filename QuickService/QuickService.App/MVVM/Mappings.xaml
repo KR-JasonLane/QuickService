@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:vm="clr-namespace:QuickService.ViewModels;assembly=QuickService.ViewModels"
+                    xmlns:vmMain="clr-namespace:QuickService.ViewModels.Main;assembly=QuickService.ViewModels"
                     xmlns:v="clr-namespace:QuickService.Views;assembly=QuickService.Views"
+                    xmlns:vUc="clr-namespace:QuickService.Views.UserControls;assembly=QuickService.Views"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--                                                                -->
@@ -22,5 +24,13 @@
     <DataTemplate DataType="{x:Type vm:SelectedFileViewModel}">
         <v:SelectedFileView/>
     </DataTemplate>
-    
+
+    <!--                                                                -->
+    <!--                          DialogView                            -->
+    <!--                                                                -->
+
+    <DataTemplate DataType="{x:Type vmMain:ConfigDialogViewModel}">
+        <vUc:ConfigDialogView/>
+    </DataTemplate>
+
 </ResourceDictionary>

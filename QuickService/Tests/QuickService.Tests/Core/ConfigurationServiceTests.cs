@@ -15,6 +15,17 @@ public class ConfigurationServiceTests
         _sut = new ConfigurationService(_jsonFileServiceMock.Object);
     }
 
+    #region Constructor Tests
+
+    [Fact]
+    public void Constructor_NullService_ThrowsArgumentNullException()
+    {
+        var act = () => new ConfigurationService(null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    #endregion
+
     #region SaveConfiguration Tests
 
     [Fact]
@@ -28,20 +39,18 @@ public class ConfigurationServiceTests
 
         // Assert
         _jsonFileServiceMock.Verify(
-            s => s.SaveJsonProperties(config, It.Is<string>(p => p.EndsWith("Configuration.json"))),
+            s => s.Save(config, It.Is<string>(p => p.EndsWith("Configuration.json"))),
             Times.Once);
     }
 
     [Fact]
-    public void SaveConfiguration_NullObject_DoesNotCallJsonService()
+    public void SaveConfiguration_NullObject_ThrowsArgumentNullException()
     {
         // Act
-        _sut.SaveConfiguration<TestConfig>(null!);
+        var act = () => _sut.SaveConfiguration<TestConfig>(null!);
 
         // Assert
-        _jsonFileServiceMock.Verify(
-            s => s.SaveJsonProperties(It.IsAny<TestConfig>(), It.IsAny<string>()),
-            Times.Never);
+        act.Should().Throw<ArgumentNullException>();
     }
 
     #endregion
@@ -54,7 +63,7 @@ public class ConfigurationServiceTests
         // Arrange
         var expected = new TestConfig { Setting = "loaded" };
         _jsonFileServiceMock
-            .Setup(s => s.GetJsonProperties<TestConfig>(It.IsAny<string>()))
+            .Setup(s => s.Load<TestConfig>(It.IsAny<string>()))
             .Returns(expected);
 
         // Act
@@ -69,7 +78,7 @@ public class ConfigurationServiceTests
     {
         // Arrange
         _jsonFileServiceMock
-            .Setup(s => s.GetJsonProperties<TestConfig>(It.IsAny<string>()))
+            .Setup(s => s.Load<TestConfig>(It.IsAny<string>()))
             .Returns(new TestConfig());
 
         // Act
@@ -77,7 +86,7 @@ public class ConfigurationServiceTests
 
         // Assert
         _jsonFileServiceMock.Verify(
-            s => s.GetJsonProperties<TestConfig>(It.Is<string>(p =>
+            s => s.Load<TestConfig>(It.Is<string>(p =>
                 p.Contains("Config") && p.EndsWith("Configuration.json"))),
             Times.Once);
     }

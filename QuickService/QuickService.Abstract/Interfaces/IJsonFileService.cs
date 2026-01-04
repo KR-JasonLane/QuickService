@@ -1,16 +1,20 @@
-﻿namespace QuickService.Abstract.Interfaces;
+namespace QuickService.Abstract.Interfaces;
 
 public interface IJsonFileService
 {
 	/// <summary>
-	/// 폴더경로와 파일경로가 유효한지 확인하고 유효하지 않으면 기본값으로 생성
+	/// 객체를 JSON 파일로 저장
 	/// </summary>
-	/// <returns> 결과 반환 </returns>
-	bool SaveJsonProperties<T>(T jsonObject, string jsonPath);
+	/// <typeparam name="T">저장할 객체의 타입</typeparam>
+	/// <param name="obj">저장할 객체</param>
+	/// <param name="path">저장할 파일 경로</param>
+	void Save<T>(T obj, string path);
 
 	/// <summary>
-	/// Json파일 파싱
+	/// JSON 파일을 객체로 로드
 	/// </summary>
-	/// <returns> Json 파싱데이터 </returns>
-	T GetJsonProperties<T>(string jsonPath) where T : new();
+	/// <typeparam name="T">로드할 객체의 타입 (기본생성자 필요)</typeparam>
+	/// <param name="path">로드할 파일 경로</param>
+	/// <returns>역직렬화된 객체</returns>
+	T Load<T>(string path) where T : new();
 }

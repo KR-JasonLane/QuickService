@@ -1,6 +1,4 @@
-﻿using QuickService.Abstract.Interfaces;
-using QuickService.ViewModels.Main;
-using QuickService.Views.UserControls;
+using QuickService.Abstract.Interfaces;
 
 namespace QuickService.Core.Services;
 
@@ -12,18 +10,14 @@ public class DialogHostService : IDialogHostService
 	/// <summary>
 	/// 다이얼로그 호스트를 호출한다.
 	/// </summary>
-	/// <param name="dialogHostName"> 호출할 다이얼로그 호스트 이름 </param>
-	/// <param name="message"> 메시지(기본값 = 빈 문자열) </param>
-	/// <returns> Ok = true / Cancel = false </returns>
-	public bool ShowConfigDialog(string dialogHostName, string message = "")
+	/// <param name="hostName">호출할 다이얼로그 호스트 이름</param>
+	/// <param name="content">다이얼로그에 표시할 콘텐츠</param>
+	/// <returns>Ok = true / Cancel = false</returns>
+	public bool ShowDialog(string hostName, object content)
 	{
-		//다이얼로그 뷰 생성
-		object? configDialogView = new ConfigDialogView() { DataContext = new ConfigDialogViewModel() };
-
-		//다이얼로그 띄우기
-		object? result = DialogHost.Show(configDialogView, dialogHostName);
-
-		//결과 반환
-		return result is true;
+		// DialogHost.Show는 비동기 메서드로, 다이얼로그가 닫힐 때까지 대기하지 않음
+		// 호출부에서 반환값을 사용하지 않으므로 fire-and-forget 처리
+		_ = DialogHost.Show(content, hostName);
+		return true;
 	}
 }
