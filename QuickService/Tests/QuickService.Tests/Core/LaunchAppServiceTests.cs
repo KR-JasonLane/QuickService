@@ -1,3 +1,4 @@
+using System.IO;
 using QuickService.Core.Services;
 
 namespace QuickService.Tests.Core;
@@ -12,31 +13,32 @@ public class LaunchAppServiceTests
     }
 
     [Fact]
-    public void LaunchApp_NullPath_DoesNotThrow()
+    public void LaunchApp_NullPath_ThrowsArgumentException()
     {
         // Act
         var act = () => _sut.LaunchApp(null!);
 
         // Assert
-        act.Should().NotThrow();
+        act.Should().Throw<ArgumentException>();
     }
 
     [Fact]
-    public void LaunchApp_EmptyPath_DoesNotThrow()
+    public void LaunchApp_EmptyPath_ThrowsArgumentException()
     {
         // Act
         var act = () => _sut.LaunchApp(string.Empty);
 
         // Assert
-        act.Should().NotThrow();
+        act.Should().Throw<ArgumentException>();
     }
 
     [Fact]
-    public void LaunchApp_NonExistentPath_DocumentedBehavior()
+    public void LaunchApp_NonExistentPath_ThrowsFileNotFoundException()
     {
-        // Note: 현재 구현은 MessageBox.Show를 사용하므로 UI 없는 테스트 환경에서
-        //       테스트 불가. 리팩토링 후 예외 기반으로 변경되면 테스트 강화 예정.
-        //       현재는 null/empty 경로에 대한 방어 로직만 테스트 가능.
-        true.Should().BeTrue();
+        // Act
+        var act = () => _sut.LaunchApp(@"C:\nonexistent\fake_app.exe");
+
+        // Assert
+        act.Should().Throw<FileNotFoundException>();
     }
 }
