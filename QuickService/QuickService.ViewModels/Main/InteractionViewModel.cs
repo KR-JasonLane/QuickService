@@ -1,4 +1,4 @@
-﻿using QuickService.Abstract.Interfaces;
+using QuickService.Abstract.Interfaces;
 using QuickService.Models.Configure;
 using QuickService.ViewModels.Messenger;
 
@@ -6,69 +6,49 @@ namespace QuickService.ViewModels;
 
 public partial class InteractionViewModel : ObservableRecipient, IViewModel
 {
-    public InteractionViewModel(IUserSelectPathService userSelectPathService, IConfigurationService configurationService)
-    {
-        ////////////////////////////////////////
-        // 서비스 등록
-        ////////////////////////////////////////
-        {
-            _userSelectPathService = userSelectPathService;
-			_configurationService  = configurationService;
-		}
-    }
+	private readonly IUserSelectPathService _userSelectPathService;
+	private readonly IConfigurationService _configurationService;
 
-    #region Services
-
-    /// <summary>
-    /// 사용자 선택 경로 서비스
-    /// </summary>
-    IUserSelectPathService _userSelectPathService;
-
-    /// <summary>
-    /// 사용자 설정 서비스
-    /// </summary>
-    IConfigurationService _configurationService;
-
-    #endregion
-
-    #region Commands
-
-    /// <summary>
-    /// URL파라미터 오픈
-    /// </summary>
-    /// <param name="url"> 오픈할 URL </param>
-    [RelayCommand]
-    private void OpenWebSiteLink(string url)
+	public InteractionViewModel(
+		IUserSelectPathService userSelectPathService,
+		IConfigurationService configurationService)
 	{
-		var sInfo = new ProcessStartInfo(url)
-		{
-			UseShellExecute = true,
-		};
-		Process.Start(sInfo);
+		_userSelectPathService = userSelectPathService;
+		_configurationService  = configurationService;
 	}
 
-    /// <summary>
-    /// 사용자가 선택한 어플리케이션을 기억
-    /// </summary>
-    /// <param name="param"> Left, Top, Right, Bottom 파라미터 </param>
-    [RelayCommand]
-    private void RegistrationQuickServiceApplication(string param)
-    {
-        string userSelectedPath = _userSelectPathService.GetUserSelectedFilePath();
-        if (string.IsNullOrEmpty(userSelectedPath)) return;
+	/// <summary>
+	/// URL파라미터 오픈
+	/// </summary>
+	[RelayCommand]
+	private void OpenWebSiteLink(string url)
+	{
+		Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+	}
 
-        var position = Enum.Parse<AppPosition>(param, ignoreCase: true);
-        var configuration = _configurationService.GetConfiguration<RegisteredApplicationModel>();
+	/// <summary>
+	/// 사용자가 선택한 어플리케이션을 기억
+	/// </summary>
+	[RelayCommand]
+	private void RegistrationQuickServiceApplication(string param)
+	{
+		var path = _userSelectPathService.GetUserSelectedFilePath();
+		if (string.IsNullOrEmpty(path)) return;
 
-        configuration.GetByPosition(position).AppPath = userSelectedPath;
-        _configurationService.SaveConfiguration(configuration);
+		var position = Enum.Parse<AppPosition>(param, ignoreCase: true);
+		SaveAppRegistration(position, path);
+		NotifyAppChanged(position);
+	}
 
-        WeakReferenceMessenger.Default.Send(new AppInformationChangedMessage(position));
-    }
+	private void SaveAppRegistration(AppPosition position, string path)
+	{
+		var config = _configurationService.GetConfiguration<RegisteredApplicationModel>();
+		config.GetByPosition(position).AppPath = path;
+		_configurationService.SaveConfiguration(config);
+	}
 
-    #endregion
-
-    #region Methods
-
-    #endregion
+	private static void NotifyAppChanged(AppPosition position)
+	{
+		WeakReferenceMessenger.Default.Send(new AppInformationChangedMessage(position));
+	}
 }
