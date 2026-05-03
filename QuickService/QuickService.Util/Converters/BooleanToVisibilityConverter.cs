@@ -1,17 +1,20 @@
-﻿namespace QuickService.Util.Converters;
+namespace QuickService.Util.Converters;
 
 public class BooleanToVisibilityConverter : IValueConverter
 {
+	/// <summary>
+	/// true일 경우 변환 결과를 반전
+	/// </summary>
+	public bool IsReversed { get; set; }
+
 	/// <summary>
 	/// bool 값을 Visibility 형태로 컨버팅
 	/// </summary>
 	public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 	{
-		if (value is bool boolValue)
-		{
-			return boolValue ? Visibility.Visible : Visibility.Collapsed;
-		}
-		return Visibility.Visible;
+		var boolValue = value is bool b && b;
+		if (IsReversed) boolValue = !boolValue;
+		return boolValue ? Visibility.Visible : Visibility.Collapsed;
 	}
 
 	/// <summary>
@@ -19,6 +22,7 @@ public class BooleanToVisibilityConverter : IValueConverter
 	/// </summary>
 	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 	{
-		return (value is Visibility visibility) && (visibility == Visibility.Visible);
+		var isVisible = value is Visibility v && v == Visibility.Visible;
+		return IsReversed ? !isVisible : isVisible;
 	}
 }

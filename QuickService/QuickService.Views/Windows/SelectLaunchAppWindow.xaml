@@ -22,8 +22,8 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <cvt:BooleanToVisibilityConverter        x:Key="BooleanToVisibilityConverter"/>
-        <cvt:BooleanToVisibilityReverseConverter x:Key="BooleanToVisibilityReverseConverter"/>
+        <cvt:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <cvt:BooleanToVisibilityConverter x:Key="BooleanToVisibilityReverseConverter" IsReversed="True"/>
 
         <Style x:Key="AnimationGrid" TargetType="Grid">
             <Style.Triggers>

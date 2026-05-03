@@ -25,24 +25,24 @@ public class BooleanToVisibilityConverterTests
     }
 
     [Fact]
-    public void Convert_NonBoolValue_ReturnsVisible()
+    public void Convert_NonBoolValue_ReturnsCollapsed()
     {
         var result = _sut.Convert("not a bool", typeof(Visibility), null!, CultureInfo.InvariantCulture);
-        result.Should().Be(Visibility.Visible);
+        result.Should().Be(Visibility.Collapsed);
     }
 
     [Fact]
-    public void Convert_NullValue_ReturnsVisible()
+    public void Convert_NullValue_ReturnsCollapsed()
     {
         var result = _sut.Convert(null!, typeof(Visibility), null!, CultureInfo.InvariantCulture);
-        result.Should().Be(Visibility.Visible);
+        result.Should().Be(Visibility.Collapsed);
     }
 
     [Fact]
-    public void Convert_IntegerValue_ReturnsVisible()
+    public void Convert_IntegerValue_ReturnsCollapsed()
     {
         var result = _sut.Convert(42, typeof(Visibility), null!, CultureInfo.InvariantCulture);
-        result.Should().Be(Visibility.Visible);
+        result.Should().Be(Visibility.Collapsed);
     }
 
     #endregion
@@ -80,9 +80,9 @@ public class BooleanToVisibilityConverterTests
     #endregion
 }
 
-public class BooleanToVisibilityReverseConverterTests
+public class BooleanToVisibilityConverterReversedTests
 {
-    private readonly BooleanToVisibilityReverseConverter _sut = new();
+    private readonly BooleanToVisibilityConverter _sut = new() { IsReversed = true };
 
     #region Convert Tests
 
@@ -101,17 +101,17 @@ public class BooleanToVisibilityReverseConverterTests
     }
 
     [Fact]
-    public void Convert_NonBoolValue_ReturnsCollapsed()
+    public void Convert_NonBoolValue_ReturnsVisible()
     {
         var result = _sut.Convert("not a bool", typeof(Visibility), null!, CultureInfo.InvariantCulture);
-        result.Should().Be(Visibility.Collapsed);
+        result.Should().Be(Visibility.Visible);
     }
 
     [Fact]
-    public void Convert_NullValue_ReturnsCollapsed()
+    public void Convert_NullValue_ReturnsVisible()
     {
         var result = _sut.Convert(null!, typeof(Visibility), null!, CultureInfo.InvariantCulture);
-        result.Should().Be(Visibility.Collapsed);
+        result.Should().Be(Visibility.Visible);
     }
 
     #endregion
@@ -119,17 +119,17 @@ public class BooleanToVisibilityReverseConverterTests
     #region ConvertBack Tests
 
     [Fact]
-    public void ConvertBack_Visible_ReturnsTrue()
+    public void ConvertBack_Visible_ReturnsFalse()
     {
         var result = _sut.ConvertBack(Visibility.Visible, typeof(bool), null!, CultureInfo.InvariantCulture);
-        result.Should().Be(true);
+        result.Should().Be(false);
     }
 
     [Fact]
-    public void ConvertBack_Collapsed_ReturnsFalse()
+    public void ConvertBack_Collapsed_ReturnsTrue()
     {
         var result = _sut.ConvertBack(Visibility.Collapsed, typeof(bool), null!, CultureInfo.InvariantCulture);
-        result.Should().Be(false);
+        result.Should().Be(true);
     }
 
     #endregion
@@ -141,14 +141,11 @@ public class BooleanToVisibilityReverseConverterTests
     [InlineData(false)]
     public void Convert_OppositeOfNormalConverter(bool input)
     {
-        // Arrange
         var normalConverter = new BooleanToVisibilityConverter();
 
-        // Act
         var normalResult = normalConverter.Convert(input, typeof(Visibility), null!, CultureInfo.InvariantCulture);
         var reverseResult = _sut.Convert(input, typeof(Visibility), null!, CultureInfo.InvariantCulture);
 
-        // Assert - 두 컨버터의 결과는 항상 반대여야 함
         normalResult.Should().NotBe(reverseResult);
     }
 
