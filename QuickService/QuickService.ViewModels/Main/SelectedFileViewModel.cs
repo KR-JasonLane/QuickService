@@ -1,130 +1,60 @@
-﻿using QuickService.Abstract.Interfaces;
+using QuickService.Abstract.Interfaces;
 using QuickService.Models.Configure;
 using QuickService.Extensions;
 using QuickService.ViewModels.Messenger;
 
 namespace QuickService.ViewModels;
+
 public partial class SelectedFileViewModel : ObservableRecipient, IViewModel
 {
-    public SelectedFileViewModel(IConfigurationService configurationService)
-    {
-		////////////////////////////////////////
-		// 메신저 등록
-		////////////////////////////////////////
-		{
-			WeakReferenceMessenger.Default.Register<AppInformationChangedMessage>(this, (r, m) =>
-			{
-				LoadUserSelectedAppIconImages(m.Value);
-			});
-		}
-
-
-		////////////////////////////////////////
-		// 서비스 등록
-		////////////////////////////////////////
-		{
-            _configurationService = configurationService;
-        }
-
-
-		////////////////////////////////////////
-		// 사용자 설정 로드
-		////////////////////////////////////////
-		{
-            LoadUserSelectedAppIconImages(AppPosition.Left	);
-			LoadUserSelectedAppIconImages(AppPosition.Right	);
-			LoadUserSelectedAppIconImages(AppPosition.Top	);
-			LoadUserSelectedAppIconImages(AppPosition.Bottom);
-		}
-	}
-
-	#region Services
-
+	private const string EmptyAppName = "Empty";
 	private readonly IConfigurationService _configurationService;
 
-    #endregion
+	public SelectedFileViewModel(IConfigurationService configurationService)
+	{
+		_configurationService = configurationService;
 
-    #region Properties
+		WeakReferenceMessenger.Default.Register<AppInformationChangedMessage>(this, (r, m) =>
+			UpdateAppDisplay(m.Value));
 
-	/// <summary>
-	/// 좌측 어플리케이션 아이콘 이미지
-	/// </summary>
-    [ObservableProperty]
-    private ImageSource? _leftAppIconImageSource;
+		foreach (var position in Enum.GetValues<AppPosition>())
+			UpdateAppDisplay(position);
+	}
 
-	/// <summary>
-	/// 좌측 어플리케이션 이름
-	/// </summary>
-    [ObservableProperty]
-    private string? _leftAppName;
-
-	/// <summary>
-	/// 상단 어플리케이션 아이콘 이미지
-	/// </summary>
-	[ObservableProperty]
-	private ImageSource? _topAppIconImageSource;
+	[ObservableProperty] private ImageSource? _leftAppIconImageSource;
+	[ObservableProperty] private string? _leftAppName;
+	[ObservableProperty] private ImageSource? _topAppIconImageSource;
+	[ObservableProperty] private string? _topAppName;
+	[ObservableProperty] private ImageSource? _rightAppIconImageSource;
+	[ObservableProperty] private string? _rightAppName;
+	[ObservableProperty] private ImageSource? _bottomAppIconImageSource;
+	[ObservableProperty] private string? _bottomAppName;
 
 	/// <summary>
-	/// 상단 어플리케이션 이름
+	/// 지정된 위치의 앱 표시 정보를 갱신
 	/// </summary>
-	[ObservableProperty]
-	private string? _topAppName;
+	private void UpdateAppDisplay(AppPosition position)
+	{
+		var config = _configurationService.GetConfiguration<RegisteredApplicationModel>();
 
-	/// <summary>
-	/// 우측 어플리케이션 아이콘 이미지
-	/// </summary>
-	[ObservableProperty]
-	private ImageSource? _rightAppIconImageSource;
+		if (config is null)
+			throw new InvalidOperationException("사용자 설정 불러오기 실패");
 
-	/// <summary>
-	/// 우측 어플리케이션 이름
-	/// </summary>
-	[ObservableProperty]
-	private string? _rightAppName;
+		var appInfo = config.GetByPosition(position);
+		var (icon, name) = ExtractDisplayInfo(appInfo);
+		ApplyDisplay(position, icon, name);
+	}
 
-	/// <summary>
-	/// 하단 어플리케이션 아이콘 이미지
-	/// </summary>
-	[ObservableProperty]
-	private ImageSource? _bottomAppIconImageSource;
+	private static (ImageSource? icon, string name) ExtractDisplayInfo(AppInformationModel app)
+	{
+		if (!app.HasValidPath())
+			return (Properties.Resources.EmptyIcon.ToImageSource(), EmptyAppName);
 
-	/// <summary>
-	/// 하단 어플리케이션 이름
-	/// </summary>
-	[ObservableProperty]
-	private string? _bottomAppName;
+		app.LoadInfoFromPath();
+		return (app.IconImage, app.DisplayName ?? EmptyAppName);
+	}
 
-	#endregion
-
-	#region Methods
-
-	/// <summary>
-	/// 선택된 앱들의 정보를 로드
-	/// </summary>
-	private void LoadUserSelectedAppIconImages(AppPosition position)
-    {
-        var configuration = _configurationService.GetConfiguration<RegisteredApplicationModel>();
-
-        if(configuration is null)
-			throw new InvalidOperationException("Error : 사용자 설정 불러오기 실패!");
-
-		var appInfo = configuration.GetByPosition(position);
-
-		if (appInfo.HasValidPath())
-		{
-			appInfo.LoadInfoFromPath();
-			ApplyAppDisplay(position, appInfo.IconImage!, appInfo.DisplayName!);
-		}
-		else
-		{
-			ApplyAppDisplay(position, Properties.Resources.EmptyIcon.ToImageSource()!, "Empty");
-		}
-    }
-
-	/// <summary>
-	/// 위치에 해당하는 앱 표시 정보를 적용
-	/// </summary>
-	private void ApplyAppDisplay(AppPosition position, ImageSource icon, string name)
+	private void ApplyDisplay(AppPosition position, ImageSource? icon, string name)
 	{
 		switch (position)
 		{
@@ -134,6 +64,4 @@ public partial class SelectedFileViewModel : ObservableRecipient, IViewModel
 			case AppPosition.Bottom: BottomAppIconImageSource = icon; BottomAppName = name; break;
 		}
 	}
-
-    #endregion
 }
