@@ -1,21 +1,18 @@
-﻿using QuickService.Abstract.Interfaces;
+using QuickService.Abstract.Interfaces;
 
 namespace QuickService.ViewModels;
+
 public partial class MainViewModel : ObservableRecipient, IViewModel
 {
-	public MainViewModel()
+	public MainViewModel(
+		TitleViewModel titleViewModel,
+		InteractionViewModel interactionViewModel,
+		SelectedFileViewModel selectedFileViewModel)
 	{
-		////////////////////////////////////////
-		// 바인딩 속성
-		////////////////////////////////////////
-		{
-			TitleContent		= Ioc.Default.GetService<TitleViewModel>		()!;
-			InteractionContent	= Ioc.Default.GetService<InteractionViewModel>	()!;
-			SelectedFileContent = Ioc.Default.GetService<SelectedFileViewModel>	()!;
-		}
+		TitleContent        = titleViewModel;
+		InteractionContent  = interactionViewModel;
+		SelectedFileContent = selectedFileViewModel;
 	}
-
-	#region Properties
 
 	/// <summary>
 	/// 타이틀 뷰모델
@@ -34,14 +31,4 @@ public partial class MainViewModel : ObservableRecipient, IViewModel
 	/// </summary>
 	[ObservableProperty]
 	private IViewModel _selectedFileContent;
-
-    #endregion
-
-    #region Commands
-
-    #endregion
-
-    #region Methods
-
-    #endregion
 }

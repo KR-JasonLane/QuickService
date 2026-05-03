@@ -1,33 +1,17 @@
-﻿using QuickService.Abstract.Interfaces;
+using QuickService.Abstract.Interfaces;
 
 namespace QuickService.ViewModels;
+
 public partial class ShellWindowViewModel : ObservableRecipient, IViewModel
 {
-	public ShellWindowViewModel()
+	public ShellWindowViewModel(MainViewModel mainViewModel)
 	{
-		////////////////////////////////////////
-		// 바인딩 속성
-		////////////////////////////////////////
-		{
-			ShellContent = Ioc.Default.GetService<MainViewModel>()!;
-		}
+		ShellContent = mainViewModel;
 	}
 
-	#region Properties
-
 	/// <summary>
-	/// ShellWindow에 표현
+	/// ShellWindow에 표현할 콘텐츠
 	/// </summary>
 	[ObservableProperty]
-	public IViewModel? _shellContent;
-
-    #endregion
-
-    #region Commands
-
-    #endregion
-
-    #region Methods
-
-    #endregion
+	private IViewModel? _shellContent;
 }
