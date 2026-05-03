@@ -1,4 +1,6 @@
-﻿namespace QuickService.Extensions;
+using System.Drawing.Imaging;
+
+namespace QuickService.Extensions;
 
 /// <summary>
 /// Icon 확장메서드
@@ -12,24 +14,11 @@ public static class IconExtension
 	/// <returns> 추출한 이미지 </returns>
 	public static ImageSource ToImageSource(this Icon icon)
 	{
-		using (MemoryStream stream = new MemoryStream())
-		{			
-			using (Bitmap bitmap = icon.ToBitmap())
-			{
-				bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-			}
-
-			stream.Seek(0, SeekOrigin.Begin);
-
-			BitmapImage bitmapImage = new BitmapImage();
-			bitmapImage.BeginInit();
-			bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-			bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-			bitmapImage.StreamSource = stream;
-			bitmapImage.EndInit();
-			bitmapImage.Freeze();
-
-			return bitmapImage;
-		}
+		ArgumentNullException.ThrowIfNull(icon);
+		return ImageConversionHelper.CreateBitmapImage(stream =>
+		{
+			using var bitmap = icon.ToBitmap();
+			bitmap.Save(stream, ImageFormat.Png);
+		});
 	}
 }
